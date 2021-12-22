@@ -52,7 +52,7 @@ class GetDataRefrigerator extends Command
             'curl' => [CURLOPT_SSL_VERIFYPEER => false],
         ];
 
-        $page = 1;
+        $page = 5;
         $list_title = [];
         $list_link[] = [];
         for ($i = 1; $i <= $page; $i++) {
