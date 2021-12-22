@@ -99,6 +99,28 @@
             </ul>
           </b-collapse>
         </li>
+        <li class="nav-item menu-items">
+          <span
+            class="nav-link"
+            v-b-toggle="'category-dropdown'"
+            :class="{ active: subIsActive('/category') }"
+          >
+            <span class="menu-icon">
+              <i class="mdi mdi-table-large"></i>
+            </span>
+            <span class="menu-title">Категорий</span>
+            <i class="menu-arrow"></i>
+          </span>
+          <b-collapse accordion="sidebar-accordion" id="category-dropdown">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item">
+                <router-link class="nav-link" to="/category/create"
+                  >Создать</router-link
+                >
+              </li>
+            </ul>
+          </b-collapse>
+        </li>
       </ul>
     </nav>
   </section>

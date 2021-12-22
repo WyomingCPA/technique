@@ -20,6 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function () {
     Route::get('refrigerator', 'ProductController@index');
+    Route::post('set-learn', 'ProductController@learn');
+});
+
+Route::group(['prefix' => 'category', 'middleware' => 'auth:sanctum'], function () {
+    Route::post('/store', 'CategoryController@store');
 });
 
 Route::post('/login', 'AuthController@login');

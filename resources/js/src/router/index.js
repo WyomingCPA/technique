@@ -93,6 +93,20 @@ function configRoutes() {
       ]
     },
     {
+      path: '/category',
+      component: layout,
+      children: [
+        {
+          path: 'create',
+          name: 'category-create',
+          component: () => import('@/pages/category/create'),
+          meta: {
+            authRequired: true
+          }
+        },
+      ]
+    },
+    {
       path: '/auth-pages',
       component: {
         render(c) { return c('router-view') }

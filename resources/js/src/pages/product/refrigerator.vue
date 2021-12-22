@@ -16,39 +16,23 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title"></h4>
-            <b-table responsive :items="items" :fields="fields">
+            <b-table
+              responsive
+              :items="items"
+              :fields="fields"
+              :sort-by.sync="sortBy"
+              :sort-desc.sync="sortDesc"
+            >
               <template #cell(actions)="row">
                 <b-button
                   size="sm"
-                  @click="setSubscribers(row.item, row.index, $event.target)"
+                  @click="setLearn(row.item, row.index, $event.target)"
                   class="mr-1"
                 >
-                  Действие
+                  Повторил
                 </b-button>
               </template>
             </b-table>
-            <!-- Info modal -->
-            <b-modal
-              ref="my-modal"
-              :id="infoModal.id"
-              :title="infoModal.title"
-              @hide="resetInfoModal"
-              @ok="handleOk"
-            >
-              <form ref="form" @submit.stop.prevent="handleSubmit">
-                <b-form-group
-                  label="Кол-во подписчиков"
-                  label-for="name-input"
-                  invalid-feedback="Name is required"
-                >
-                  <b-form-input
-                    id="name-input"
-                    v-model="countSubscriber"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-              </form>
-            </b-modal>
           </div>
         </div>
       </div>
@@ -63,8 +47,11 @@ export default {
   components: {},
   data() {
     return {
+      sortBy: "count_learn",
+      sortDesc: false,
       countSubscriber: 0,
       idGroup: "",
+      idProduct: "",
       items: Array,
       infoModal: {
         id: "info-modal",
@@ -75,6 +62,11 @@ export default {
         {
           key: "name",
           label: "Название",
+          sortable: true,
+        },
+        {
+          key: "count_learn",
+          label: "Количество повторений",
           sortable: true,
         },
         {
@@ -93,17 +85,31 @@ export default {
     };
   },
   methods: {
-    handleOk(bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault();
-      // Trigger submit handler
-      this.handleSubmit();
+    setLearn(item, index, button) {
+      this.idProduct = item.id;
+      console.log(item.id);
+      let self = this;
+      axios.get("/sanctum/csrf-cookie").then((response) => {
+        axios
+          .post("/api/product/set-learn", {
+            id_product: self.idProduct,
+          })
+          .then((response) => {
+            if (response.status) {
+              console.log("Вызвали алерт");
+              this.getProduct();
+            } else {
+              console.log("Не работает");
+              console.log(response.status);
+            }
+          })
+          .catch(function (error) {
+            console.log(response);
+            console.error(error);
+          });
+      });
     },
-    setSubscribers(item, index, button) {
-      this.infoModal.title = item.name;
-      this.idGroup = item.id;
-      this.$root.$emit("bv::show::modal", this.infoModal.id, button);
-    },
+
     getProduct() {
       let self = this;
       axios
