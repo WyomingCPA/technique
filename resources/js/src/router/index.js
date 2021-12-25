@@ -90,6 +90,14 @@ function configRoutes() {
             authRequired: true
           }
         },
+        {
+          path: 'washmashine',
+          name: 'product-washmashine',
+          component: () => import('@/pages/product/washmasine'),
+          meta: {
+            authRequired: true
+          }
+        },
       ]
     },
     {

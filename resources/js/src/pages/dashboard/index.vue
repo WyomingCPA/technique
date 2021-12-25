@@ -1,14 +1,5 @@
 <template>
   <section class="dashboard">
-    <div class="proBanner">
-      <div>
-        <span class="d-flex align-items-center purchase-popup">
-          <p>Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!</p>
-          <a href="https://www.bootstrapdash.com/product/corona-vue/?utm_source=organic&utm_medium=banner&utm_campaign=free-preview" rel="noopener noreferrer" target="_blank" class="btn btn-sm purchase-button btn-primary ml-auto">Check Pro Version</a>
-          <i class="mdi mdi-close bannerClose"  @click="toggleProBanner()" ></i>
-        </span>
-      </div>
-    </div>
     <div class="row">
       <div class="col-md-4 grid-margin stretch-card">
         <div class="card">

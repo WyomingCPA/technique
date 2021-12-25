@@ -13,10 +13,16 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         return response([
-            'products' => Product::where('status', true)->get(),
+            'products' => Product::where('status', true)->where('category_id', '=', 1)->get(),
         ], 200);
     }
     
+    public function washmashine(Request $request)
+    {
+        return response([
+            'products' => Product::where('status', true)->where('category_id', '=', 2)->get(),
+        ], 200);
+    }
     public function learn(Request $request)
     {
         echo $request->id_product;
