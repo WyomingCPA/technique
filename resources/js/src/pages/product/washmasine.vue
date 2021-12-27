@@ -18,11 +18,18 @@
             <h4 class="card-title"></h4>
             <b-table
               responsive
+              :busy="loading"
               :items="items"
               :fields="fields"
               :sort-by.sync="sortBy"
               :sort-desc.sync="sortDesc"
             >
+              <template #table-busy>
+                <div class="text-center text-danger my-2">
+                  <b-spinner class="align-middle"></b-spinner>
+                  <strong>Loading...</strong>
+                </div>
+              </template>
               <template #cell(actions)="row">
                 <b-button
                   size="sm"
@@ -47,6 +54,7 @@ export default {
   components: {},
   data() {
     return {
+      loading: false,
       sortBy: "count_learn",
       sortDesc: false,
       countSubscriber: 0,
@@ -86,6 +94,7 @@ export default {
   },
   methods: {
     setLearn(item, index, button) {
+      this.loading = true;
       this.idProduct = item.id;
       console.log(item.id);
       let self = this;
@@ -97,15 +106,18 @@ export default {
           .then((response) => {
             if (response.status) {
               console.log("Вызвали алерт");
-              this.getProduct();
+              this.getWashProduct();
+              this.loading = false;
             } else {
               console.log("Не работает");
               console.log(response.status);
+              this.loading = false;
             }
           })
           .catch(function (error) {
             console.log(response);
             console.error(error);
+            this.loading = false;
           });
       });
     },
