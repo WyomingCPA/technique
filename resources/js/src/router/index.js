@@ -98,6 +98,30 @@ function configRoutes() {
             authRequired: true
           }
         },
+        {
+          path: 'tv32',
+          name: 'tv32',
+          component: () => import('@/pages/product/tv32'),
+          meta: {
+            authRequired: true
+          }
+        },
+        {
+          path: 'tv40',
+          name: 'tv40',
+          component: () => import('@/pages/product/tv40'),
+          meta: {
+            authRequired: true
+          }
+        },
+        {
+          path: 'tv50',
+          name: 'tv50',
+          component: () => import('@/pages/product/tv50'),
+          meta: {
+            authRequired: true
+          }
+        },
       ]
     },
     {

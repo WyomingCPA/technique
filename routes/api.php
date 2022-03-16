@@ -21,6 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function () {
     Route::get('refrigerator', 'ProductController@index');
     Route::get('washmashine', 'ProductController@washmashine');
+    Route::get('tv32', 'ProductController@tv32');
+    Route::get('tv40', 'ProductController@tv40');
+    Route::get('tv50', 'ProductController@tv50');
     Route::post('set-learn', 'ProductController@learn');
 });
 

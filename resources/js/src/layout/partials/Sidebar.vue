@@ -101,6 +101,21 @@
                   >Стиральные машины</router-link
                 >
               </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/product/tv32"
+                  >Tv32</router-link
+                >
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/product/tv40"
+                  >Tv40</router-link
+                >
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/product/tv50"
+                  >Tv50</router-link
+                >
+              </li>
             </ul>
           </b-collapse>
         </li>
