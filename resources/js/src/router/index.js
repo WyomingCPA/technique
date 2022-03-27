@@ -4,6 +4,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 
 import layout from '../layout'
+import publik from '../public'
 import { store } from '../store'
 
 Vue.use(Router)
@@ -76,6 +77,17 @@ function configRoutes() {
             authRequired: true
           }
         }
+      ]
+    },
+    {
+      path: '/public',
+      component: publik,
+      children: [
+        {
+          path: 'refrigerator',
+          name: 'public-refrigerator',
+          component: () => import('@/pages/product/public/refrigerator'),
+        },
       ]
     },
     {

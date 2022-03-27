@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\kor;
 
 use Illuminate\Console\Command;
 
@@ -11,14 +11,14 @@ use Ramsey\Uuid\Type\Decimal;
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Support\Facades\DB;
 
-class GetDataTv40 extends Command
+class GetDataTv50 extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:get-data-tv-40';
+    protected $signature = 'command:get-data-tv-50';
 
     /**
      * The console command description.
@@ -44,7 +44,7 @@ class GetDataTv40 extends Command
      */
     public function handle()
     {
-        
+                
         $options = [
             'headers' => [
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'
@@ -57,7 +57,7 @@ class GetDataTv40 extends Command
         $list_link[] = [];
         for ($i = 1; $i <= $page; $i++) {
             $client = new Client($options);
-            $response = $client->request('GET', 'https://www.techprom.ru/catalog/televizory_i_razvlecheniya/televizory/televizory_39_43_99sm_109sm/?arrFilter_P9_MIN=&arrFilter_P9_MAX=&arrFilter_9437=3182748561&stock=1&set_filter=%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C&PAGEN_1=' . $i)->getBody()->getContents();
+            $response = $client->request('GET', 'https://www.techprom.ru/catalog/televizory_i_razvlecheniya/televizory/televizory_45_50_114sm_127sm/?stock=1&arrFilter_P9_MIN=&arrFilter_P9_MAX=&arrFilter_9437=3182748561&stock=1&set_filter=%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C&PAGEN_1=' . $i)->getBody()->getContents();
             $crawler = new Crawler($response);
             $product_list = $crawler->filterXPath("//*[@class='product-card']");
 
@@ -76,9 +76,10 @@ class GetDataTv40 extends Command
                         $model = Product::firstOrCreate(
                             ['link' => $link,],
                             [
-                                'category_id' => 4,
+                                'category_id' => 5,
                                 'name' => $crawler_block->filterXPath("//*[@class='name']")->text(),
                                 'link' => $link,
+                                'city' => 'kor',
                                 'slug' => '-',
                                 'price' => (int)filter_var($price, FILTER_SANITIZE_NUMBER_INT),
                                 'count_learn' => 0,
@@ -97,7 +98,7 @@ class GetDataTv40 extends Command
         }
 
         //Исключить товары которых не оказалось при парсинге 
-        $products = Product::where('category_id', 4)->get();
+        $products = Product::where('category_id', 5)->where('city', 'kor')->get();
         foreach ($products as $item)
         {
             if (in_array($item->link, $list_link)) {

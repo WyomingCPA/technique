@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\kor;
 
 use Illuminate\Console\Command;
 
@@ -11,21 +11,21 @@ use Ramsey\Uuid\Type\Decimal;
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Support\Facades\DB;
 
-class GetDataRefrigerator extends Command
+class GetDataWashMasine extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:get-data-refrigerator';
+    protected $signature = 'command:get-data-washmashine';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Get data refrigerator';
+    protected $description = 'Get data wash mashine';
 
     /**
      * Create a new command instance.
@@ -57,7 +57,7 @@ class GetDataRefrigerator extends Command
         $list_link[] = [];
         for ($i = 1; $i <= $page; $i++) {
             $client = new Client($options);
-            $response = $client->request('GET', 'https://www.techprom.ru/catalog/bytovaya_tekhnika_i_tovary_dlya_doma/krupnaya_bytovaya_tekhnika/morozilniki_i_kholodilniki/?arrFilter_P2_MIN=&arrFilter_P2_MAX=&arrFilter_9437=3182748561&stock=1&arrFilter_6524_MIN=&arrFilter_6524_MAX=&arrFilter_6578_MIN=&arrFilter_6578_MAX=&set_filter=%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C&PAGEN_1=' . $i)->getBody()->getContents();
+            $response = $client->request('GET', 'https://www.techprom.ru/catalog/bytovaya_tekhnika_i_tovary_dlya_doma/krupnaya_bytovaya_tekhnika/stiralnye_mashiny/?arrFilter_P2_MIN=&arrFilter_P2_MAX=&arrFilter_9437=3182748561&stock=1&arrFilter_6430_MIN=&arrFilter_6430_MAX=&set_filter=%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C&PAGEN_1=' . $i)->getBody()->getContents();
             $crawler = new Crawler($response);
             $product_list = $crawler->filterXPath("//*[@class='product-card']");
 
@@ -76,9 +76,10 @@ class GetDataRefrigerator extends Command
                         $model = Product::firstOrCreate(
                             ['link' => $link,],
                             [
-                                'category_id' => 1,
+                                'category_id' => 2,
                                 'name' => $crawler_block->filterXPath("//*[@class='name']")->text(),
                                 'link' => $link,
+                                'city' => 'kor',
                                 'slug' => '-',
                                 'price' => (int)filter_var($price, FILTER_SANITIZE_NUMBER_INT),
                                 'count_learn' => 0,
@@ -97,7 +98,7 @@ class GetDataRefrigerator extends Command
         }
 
         //Исключить товары которых не оказалось при парсинге 
-        $products = Product::where('category_id', 1)->get();
+        $products = Product::where('category_id', 2)->where('city', 'kor')->get();
         foreach ($products as $item)
         {
             if (in_array($item->link, $list_link)) {

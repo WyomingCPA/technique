@@ -18,6 +18,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('refrigerator', 'ProductController@refrigeratorKot');
+
 Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function () {
     Route::get('refrigerator', 'ProductController@index');
     Route::get('washmashine', 'ProductController@washmashine');
