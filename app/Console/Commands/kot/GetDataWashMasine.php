@@ -65,6 +65,7 @@ class GetDataWashMasine extends Command
                 $outerHTML = $domElement->ownerDocument->saveHTML($domElement);
                 $crawler_block = new Crawler($outerHTML);
                 $link = $crawler_block->filterXPath("//*[@class='name']")->attr('href');
+                $img = $crawler_block->filterXPath("//*[@class='img fast-view']/a/img")->attr('data-src');
                 if (!empty($list_link)) {
                     if (in_array($link, $list_link)) {
                         echo "Match found\n";
@@ -80,6 +81,7 @@ class GetDataWashMasine extends Command
                                 'name' => $crawler_block->filterXPath("//*[@class='name']")->text(),
                                 'link' => $link,
                                 'city' => 'kot',
+                                'thumbnail' => $img,
                                 'slug' => '-',
                                 'price' => (int)filter_var($price, FILTER_SANITIZE_NUMBER_INT),
                                 'count_learn' => 0,
