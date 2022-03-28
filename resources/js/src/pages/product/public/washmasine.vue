@@ -91,7 +91,7 @@ export default {
     getProduct() {
       let self = this;
       axios
-        .get("/api/refrigerator")
+        .get("/api/washmasine")
         .then(function (response) {
           self.items = response.data.products;
           console.log(response.data.groups);
@@ -100,34 +100,7 @@ export default {
           console.error(error);
         });
     },
-    resetInfoModal() {
-      this.infoModal.title = "";
-      this.infoModal.content = "";
-    },
-    async handleSubmit() {
-      let self = this;
-      axios.get("/sanctum/csrf-cookie").then((response) => {
-        axios
-          .post("/api/group/set-subscriber", {
-            count_subscriber: this.countSubscriber,
-            id_group: self.idGroup,
-          })
-          .then((response) => {
-            if (response.status) {
-              console.log("Вызвали алерт");
-              this.getGroups();
-              this.$refs["my-modal"].hide();
-            } else {
-              console.log("Не работает");
-              console.log(response.status);
-            }
-          })
-          .catch(function (error) {
-            console.log(response);
-            console.error(error);
-          });
-      });
-    },
+
   },
   mounted: function () {
     this.getProduct();

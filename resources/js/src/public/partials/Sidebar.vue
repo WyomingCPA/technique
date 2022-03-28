@@ -19,62 +19,20 @@
         </router-link>
       </div>
       <ul class="nav">
-        <li class="nav-item account-dropdown">
-          <a class="nav-link" v-b-toggle="'account-dropdown'">
-            <img
-              class="img-xs rounded-circle"
-              src="@/assets/images/faces-clipart/pic-1.png"
-              alt=""
-            />
-            <p class="mb-0 text-light">Stella Johnson</p>
-            <i class="menu-arrow"></i>
-          </a>
-          <b-collapse accordion="sidebar-accordion" id="account-dropdown">
-            <ul class="nav flex-column sub-menu pl-0">
-              <li class="nav-item">
-                <a class="nav-link pl-5" href="#">
-                  <span class="menu-icon">
-                    <i class="mdi mdi-account"></i>
-                  </span>
-                  <span class="menu-title">Profile</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link pl-5" href="#">
-                  <span class="menu-icon">
-                    <i class="mdi mdi-email"></i>
-                  </span>
-                  <span class="menu-title">Inbox</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link pl-5" href="#">
-                  <span class="menu-icon">
-                    <i class="mdi mdi-wrench"></i>
-                  </span>
-                  <span class="menu-title">Settings</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link pl-5" href="#">
-                  <span class="menu-icon">
-                    <i class="mdi mdi-power"></i>
-                  </span>
-                  <span class="menu-title">Logout</span>
-                </a>
-              </li>
-            </ul>
-          </b-collapse>
-        </li>
-        <li class="nav-item nav-category">
-          <span class="nav-link">Navigation</span>
-        </li>
         <li class="nav-item menu-items" v-on:click="collapseAll">
           <router-link class="nav-link" to="/public/refrigerator">
             <span class="menu-icon">
               <i class="mdi mdi-speedometer"></i>
             </span>
             <span class="menu-title">Холодильники</span>
+          </router-link>
+        </li>
+        <li class="nav-item menu-items" v-on:click="collapseAll">
+          <router-link class="nav-link" to="/public/washmashine">
+            <span class="menu-icon">
+              <i class="mdi mdi-speedometer"></i>
+            </span>
+            <span class="menu-title">Стиральные машины</span>
           </router-link>
         </li>
       </ul>

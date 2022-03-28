@@ -88,6 +88,11 @@ function configRoutes() {
           name: 'public-refrigerator',
           component: () => import('@/pages/product/public/refrigerator'),
         },
+        {
+          path: 'washmashine',
+          name: 'public-washmashine',
+          component: () => import('@/pages/product/public/washmasine'),
+        },
       ]
     },
     {

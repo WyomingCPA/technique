@@ -16,7 +16,13 @@ class ProductController extends Controller
             'products' => Product::where('status', true)->where('category_id', '=', 1)->where('city', 'kot')->get(),
         ], 200);
     }
-
+    public function washmasineKot(Request $reqeust)
+    {
+        return response([
+            'products' => Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kot')->get(),
+        ], 200);
+    }
+    
     public function index(Request $request)
     {
         return response([
