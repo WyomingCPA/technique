@@ -116,6 +116,11 @@
                   >Tv50</router-link
                 >
               </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/product/smart"
+                  >Смартфоны</router-link
+                >
+              </li>
             </ul>
           </b-collapse>
         </li>

@@ -139,6 +139,14 @@ function configRoutes() {
             authRequired: true
           }
         },
+        {
+          path: 'smart',
+          name: 'smart',
+          component: () => import('@/pages/product/Smart'),
+          meta: {
+            authRequired: true
+          }
+        },
       ]
     },
     {

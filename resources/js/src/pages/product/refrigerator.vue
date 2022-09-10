@@ -39,6 +39,15 @@
                   Повторил
                 </b-button>
               </template>
+              <template v-slot:cell(thumbnail)="data">
+                <a
+                  :href="'https://www.techprom.ru' + data.item.link"
+                  target="_blank"
+                  ><img
+                    :src="'https://www.techprom.ru' + data.value"
+                    class="img-thumbnail rounded-0"
+                /></a>
+              </template>
             </b-table>
           </div>
         </div>
@@ -67,6 +76,13 @@ export default {
         content: "",
       },
       fields: [
+        {
+          key: "thumbnail",
+          label: "img",
+          //formatter(value) {
+          //  return `https://www.techprom.ru${value}`;
+          //},
+        },
         {
           key: "name",
           label: "Название",

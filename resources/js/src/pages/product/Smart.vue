@@ -141,7 +141,7 @@ export default {
     getWashProduct() {
       let self = this;
       axios
-        .get("/api/product/tv40")
+        .get("/api/product/smart")
         .then(function (response) {
           self.items = response.data.products;
           console.log(response.data.groups);
