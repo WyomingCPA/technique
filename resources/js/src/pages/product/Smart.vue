@@ -16,6 +16,33 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title"></h4>
+            <b-row>
+              <div class="col-sm-7">
+                <b-form-group
+                  label="Filter"
+                  label-for="filter-input"
+                  label-cols-sm="3"
+                  label-align-sm="right"
+                  label-size="sm"
+                  class="mb-0"
+                >
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="filter-input"
+                      v-model="filter"
+                      type="search"
+                      placeholder="Type to Search"
+                    ></b-form-input>
+
+                    <b-input-group-append>
+                      <b-button :disabled="!filter" @click="filter = ''"
+                        >Clear</b-button
+                      >
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
+              </div>
+            </b-row>
             <b-table
               responsive
               :busy="loading"
@@ -23,6 +50,11 @@
               :fields="fields"
               :sort-by.sync="sortBy"
               :sort-desc.sync="sortDesc"
+              :filter="filter"
+              :filter-included-fields="filterOn"
+              show-empty
+              @filtered="onFiltered"
+              small
             >
               <template #table-busy>
                 <div class="text-center text-danger my-2">
@@ -44,7 +76,7 @@
                   :href="'https://www.techprom.ru' + data.item.link"
                   target="_blank"
                   ><img
-                    :src="'https://www.techprom.ru' + data.value"
+                    :src="'https://www.techprom.ru' + data"
                     class="img-thumbnail rounded-0"
                 /></a>
               </template>
@@ -63,6 +95,8 @@ export default {
   components: {},
   data() {
     return {
+      filter: null,
+      filterOn: [],
       loading: false,
       sortBy: "count_learn",
       sortDesc: false,
@@ -80,6 +114,7 @@ export default {
           key: "thumbnail",
           label: "img",
           //formatter(value) {
+          //  console.log(`https://www.techprom.ru${value}`);
           //  return `https://www.techprom.ru${value}`;
           //},
         },
