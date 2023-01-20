@@ -43,6 +43,16 @@
                 </b-form-group>
               </div>
             </b-row>
+            <b-row>
+              <div class="col-sm-12">
+                <span v-for="(thing, index) in listPrice" :key="index"
+                  ><a href="#" @click="filterPrice(index)">
+                    {{ index }}({{ thing }})
+                  </a></span
+                >
+              </div>
+            </b-row>
+
             <b-table
               responsive
               :busy="loading"
@@ -53,7 +63,6 @@
               :filter="filter"
               :filter-included-fields="filterOn"
               show-empty
-              @filtered="onFiltered"
               small
             >
               <template #table-busy>
@@ -97,6 +106,7 @@ export default {
     return {
       filter: null,
       filterOn: [],
+      listPrice: Array,
       loading: false,
       sortBy: "count_learn",
       sortDesc: false,
@@ -144,6 +154,9 @@ export default {
     };
   },
   methods: {
+    filterPrice: function (param) {
+      this.filter=param;
+    },
     setLearn(item, index, button) {
       this.loading = true;
       this.idProduct = item.id;
@@ -157,7 +170,7 @@ export default {
           .then((response) => {
             if (response.status) {
               console.log("Вызвали алерт");
-              this.getWashProduct();
+              this.getProduct();
               this.loading = false;
             } else {
               console.log("Не работает");
@@ -173,13 +186,13 @@ export default {
       });
     },
 
-    getWashProduct() {
+    getProduct() {
       let self = this;
       axios
         .get("/api/product/smart")
         .then(function (response) {
           self.items = response.data.products;
-          console.log(response.data.groups);
+          self.listPrice = response.data.price;
         })
         .catch(function (error) {
           console.error(error);
@@ -213,9 +226,17 @@ export default {
           });
       });
     },
+    myFilter: function (val) {
+      if (arr.indexOf(val.name) === -1) {
+        arr.push(val.name);
+        return val.name;
+      }
+    },
   },
   mounted: function () {
-    this.getWashProduct();
+    this.getProduct();
+  },
+  computed: {
   },
 };
 </script>
