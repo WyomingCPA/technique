@@ -28,6 +28,7 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::get('tv40', 'ProductController@tv40');
     Route::get('tv50', 'ProductController@tv50');
     Route::get('smart', 'ProductController@smart');
+    Route::get('laptop', 'ProductController@laptop');
     Route::post('set-learn', 'ProductController@learn');
 });
 

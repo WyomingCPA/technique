@@ -85,6 +85,24 @@ class ProductController extends Controller
         ], 200);
     }
 
+    public function laptop(Request $request)
+    {
+        $products = Product::where('status', true)->where('category_id', '=', 8)->where('city', 'kor')->get();
+        $list_price = $products->pluck('price');
+        $price = [];
+        foreach ($list_price as $item)
+        {
+            $price[] = (int)$item;
+        }
+
+        $result_price = array_count_values($price);
+
+        return response([
+            'products' => $products,
+            'price' => $result_price,
+        ], 200);
+    }
+
     public function learn(Request $request)
     {
         echo $request->id_product;

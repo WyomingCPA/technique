@@ -147,6 +147,14 @@ function configRoutes() {
             authRequired: true
           }
         },
+        {
+          path: 'laptop',
+          name: 'laptop',
+          component: () => import('@/pages/product/Laptop'),
+          meta: {
+            authRequired: true
+          }
+        },
       ]
     },
     {

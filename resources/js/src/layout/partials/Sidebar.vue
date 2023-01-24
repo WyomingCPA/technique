@@ -121,6 +121,11 @@
                   >Смартфоны</router-link
                 >
               </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/product/laptop"
+                  >Ноутбуки</router-link
+                >
+              </li>
             </ul>
           </b-collapse>
         </li>
