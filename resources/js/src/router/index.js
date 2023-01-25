@@ -169,6 +169,14 @@ function configRoutes() {
             authRequired: true
           }
         },
+        {
+          path: 'index',
+          name: 'category-index',
+          component: () => import('@/pages/category/Index'),
+          meta: {
+            authRequired: true
+          }
+        },
       ]
     },
     {

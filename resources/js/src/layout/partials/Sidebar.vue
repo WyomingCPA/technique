@@ -148,6 +148,11 @@
                   >Создать</router-link
                 >
               </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/category/index"
+                  >Список</router-link
+                >
+              </li>
             </ul>
           </b-collapse>
         </li>

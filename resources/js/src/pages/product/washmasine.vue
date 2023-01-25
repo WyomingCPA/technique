@@ -16,6 +16,42 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title"></h4>
+                        <b-row>
+              <div class="col-sm-7">
+                <b-form-group
+                  label="Filter"
+                  label-for="filter-input"
+                  label-cols-sm="3"
+                  label-align-sm="right"
+                  label-size="sm"
+                  class="mb-0"
+                >
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="filter-input"
+                      v-model="filter"
+                      type="search"
+                      placeholder="Type to Search"
+                    ></b-form-input>
+
+                    <b-input-group-append>
+                      <b-button :disabled="!filter" @click="filter = ''"
+                        >Clear</b-button
+                      >
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
+              </div>
+            </b-row>
+            <b-row>
+              <div class="col-sm-12">
+                <span v-for="(thing, index) in listPrice" :key="index"
+                  ><a href="#" @click="filterPrice(index)">
+                    {{ index }}({{ thing }})
+                  </a></span
+                >
+              </div>
+            </b-row>
             <b-table
               responsive
               :busy="loading"
@@ -23,6 +59,10 @@
               :fields="fields"
               :sort-by.sync="sortBy"
               :sort-desc.sync="sortDesc"
+              :filter="filter"
+              :filter-included-fields="filterOn"
+              show-empty
+              small
             >
               <template #table-busy>
                 <div class="text-center text-danger my-2">
@@ -63,6 +103,9 @@ export default {
   components: {},
   data() {
     return {
+      filter: null,
+      filterOn: [],
+      listPrice: Array,
       loading: false,
       sortBy: "count_learn",
       sortDesc: false,
@@ -109,6 +152,9 @@ export default {
     };
   },
   methods: {
+    filterPrice: function (param) {
+      this.filter=param;
+    },
     setLearn(item, index, button) {
       this.loading = true;
       this.idProduct = item.id;
@@ -144,6 +190,7 @@ export default {
         .get("/api/product/washmashine")
         .then(function (response) {
           self.items = response.data.products;
+          self.listPrice = response.data.price;
           console.log(response.data.groups);
         })
         .catch(function (error) {

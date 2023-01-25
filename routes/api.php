@@ -33,7 +33,9 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
 });
 
 Route::group(['prefix' => 'category', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('index', 'CategoryController@index');
     Route::post('/store', 'CategoryController@store');
+    Route::post('/set-limit', 'CategoryController@setLimit');
 });
 
 Route::post('/login', 'AuthController@login');
