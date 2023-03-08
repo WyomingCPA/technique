@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {   
-        $test = Category::find(8)->limit;    
+        //$test = Category::find(8)->count_access_product;    
         return response([
             'status' => true,
             'category' => Category::with('limit')->get()->toArray(),

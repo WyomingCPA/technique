@@ -51,7 +51,7 @@ class GetDataSmartphones extends Command
             'curl' => [CURLOPT_SSL_VERIFYPEER => false],
         ];
 
-        $page = 5;
+        $page = 7;
         $list_title = [];
         $list_link[] = [];
         for ($i = 1; $i <= $page; $i++) {

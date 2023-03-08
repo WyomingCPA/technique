@@ -52,7 +52,15 @@
                 >
               </div>
             </b-row>
-
+            <b-row>
+            <div class="col-sm-12">
+                <span v-for="(thing, index) in listParams" :key="index"
+                  ><a href="#" @click="filterParams(index)">
+                    {{ index }}({{ thing }})
+                  </a></span
+                >
+              </div>
+            </b-row>
             <b-table
               responsive
               :busy="loading"
@@ -107,6 +115,7 @@ export default {
       filter: null,
       filterOn: [],
       listPrice: Array,
+      listParams: Array,
       loading: false,
       sortBy: "count_learn",
       sortDesc: false,
@@ -157,6 +166,9 @@ export default {
     filterPrice: function (param) {
       this.filter=param;
     },
+    filterParams: function (param) {
+      this.filter=param;
+    },
     setLearn(item, index, button) {
       this.loading = true;
       this.idProduct = item.id;
@@ -193,6 +205,7 @@ export default {
         .then(function (response) {
           self.items = response.data.products;
           self.listPrice = response.data.price;
+          self.listParams = response.data.params;
         })
         .catch(function (error) {
           console.error(error);

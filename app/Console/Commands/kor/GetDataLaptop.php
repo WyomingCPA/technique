@@ -56,7 +56,7 @@ class GetDataLaptop extends Command
         $list_link[] = [];
         for ($i = 1; $i <= $page; $i++) {
             $client = new Client($options);
-            $response = $client->request('GET', 'https://www.techprom.ru/catalog/noutbuki_kompyutery_komplektuyushchie/noutbuki_i_aksessuary/noutbuki/filter/store_available-is-5b471efb199f48f6c5e8f0af34f0afab/apply/?arrFilter_P9_MIN=&arrFilter_P9_MAX=&arrFilter_9437=3182748561&stock=1&set_filter=%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C' . $i)->getBody()->getContents();
+            $response = $client->request('GET', 'https://www.techprom.ru/catalog/noutbuki_kompyutery_komplektuyushchie/noutbuki_i_aksessuary/noutbuki/?arrFilter_P9_MIN=&arrFilter_P9_MAX=&arrFilter_9437=3182748561&stock=1&set_filter=%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C&PAGEN_1=' . $i)->getBody()->getContents();
             $crawler = new Crawler($response);
             $product_list = $crawler->filterXPath("//*[@class='product-card']");
 
