@@ -7,6 +7,10 @@ import Page404Layout from '../layouts/Page404Layout.vue'
 import RouteViewComponent from '../layouts/RouterBypass.vue'
 import UIRoute from '../pages/admin/ui/route'
 
+import { useUserStore } from '../stores/user'
+
+import authMiddleware from './middleware/auth-middleware'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/:catchAll(.*)',
@@ -19,6 +23,9 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         name: 'dashboard',
+        meta: {
+          authRequired: true
+        },
         path: 'dashboard',
         component: () => import('../pages/admin/dashboard/Dashboard.vue'),
       },
@@ -216,5 +223,7 @@ const router = createRouter({
   //  mode: process.env.VUE_APP_ROUTER_MODE_HISTORY === 'true' ? 'history' : 'hash',
   routes,
 })
+
+router.beforeEach(authMiddleware)
 
 export default router
