@@ -19,6 +19,24 @@ export default {
       },
     },
     {
+      name: 'products',
+      displayName: 'menu.products',
+      meta: {
+        icon: 'vuestic-iconset-components',
+      },
+      disabled: true,
+      children: [
+        {
+          name: 'charts',
+          displayName: 'menu.charts',
+        },
+        {
+          name: 'progress-bars',
+          displayName: 'menu.progressBars',
+        },
+      ],
+    },
+    {
       name: 'statistics',
       displayName: 'menu.statistics',
       meta: {

@@ -14,7 +14,6 @@ export const useApi = (endpoint = 'api') => {
 	
 	if (endpoint === 'api') {
 		baseURL = API_HOST + API_PATH || 'http://localhost/technique/public/api'
-        console.log(baseURL);
 	} else if (endpoint === 'web') {
 		baseURL = API_HOST || 'http://localhost:8000'
 	}
