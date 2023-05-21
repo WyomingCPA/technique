@@ -10,7 +10,6 @@
   "dependencies": {
     "@johmun/vue-tags-input": "^2.1.0",
     "@mdi/font": "^4.5.95",
-    "axios": "^0.24.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.4",
     "bootstrap-vue-treeview": "^1.0.8",
@@ -24,12 +23,10 @@
     "flag-icon-css": "^3.4.5",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
-    "node-sass": "^6.0.1",
     "simple-line-icons": "^2.4.1",
     "ti-icons": "^0.1.2",
     "v-clipboard": "^2.2.2",
     "vue": "^2.6.10",
-    "vue-axios": "^3.4.0",
     "vue-c3": "^1.2.11",
     "vue-chartist": "^2.2.1",
     "vue-chartjs": "^3.5.0",
@@ -56,20 +53,19 @@
     "vue2-datepicker": "^3.1.1",
     "vue2-dragula": "^2.5.4",
     "vue2-google-maps": "^0.10.7",
-    "vuelidate": "^0.7.4",
-    "vuex": "^3.6.2"
+    "vuelidate": "^0.7.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
-    "@vue/cli-service": "^4.5.15",
+    "@vue/cli-service": "^4.0.0",
     "babel-eslint": "^10.0.3",
     "compass-mixins": "^0.12.10",
     "css-loader": "^3.2.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "sass": "^1.43.4",
-    "sass-loader": "^10.2.0",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.0",
     "vue-template-compiler": "^2.6.10",
     "vuetable-2": "^1.7.5"
   },
@@ -82,9 +78,7 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {
-      "no-console": "off"
-    },
+    "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
     }

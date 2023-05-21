@@ -27,12 +27,28 @@ export default {
       disabled: true,
       children: [
         {
-          name: 'charts',
-          displayName: 'menu.charts',
+          name: 'refrigerator',
+          displayName: 'menu.refrigerator',
         },
         {
-          name: 'progress-bars',
-          displayName: 'menu.progressBars',
+          name: 'washmashine',
+          displayName: 'menu.washmashine',
+        },
+        {
+          name: 'tv32',
+          displayName: 'menu.tv32',
+        },
+        {
+          name: 'tv50',
+          displayName: 'menu.tv50',
+        },
+        {
+          name: 'smart',
+          displayName: 'menu.smart',
+        },
+        {
+          name: 'laptop',
+          displayName: 'menu.laptop',
         },
       ],
     },

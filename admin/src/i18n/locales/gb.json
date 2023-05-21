@@ -337,7 +337,14 @@
     "line-maps": "Line Maps",
     "login-singup": "Login/Signup",
     "404-pages": "404 Pages",
-    "faq": "Faq"
+    "faq": "Faq",
+    "products": "Товары",
+    "refrigerator": "Холодильники",
+    "washmashine": "Стиральные машины",
+    "tv32": "Tv32",
+    "tv50": "Tv50",
+    "smart": "Смартфоны",
+    "laptop": "Ноутбуки"
   },
   "messages": {
     "all": "See all messages",
@@ -418,7 +425,7 @@
     }
   },
   "navbar": {
-    "messageUs": "Web development inquiries:",
+    "messageUs": "",
     "repository": "GitHub Repo"
   },
   "notifications": {

@@ -13,8 +13,8 @@ Vue.config.performance = true
 
 axios.defaults.withCredentials = true
 Vue.config.productionTip = false
-//axios.defaults.baseURL = 'http://localhost/technique/public'
-axios.defaults.baseURL = 'http://techniqueb1.simpleitrunner.ru/';
+axios.defaults.baseURL = 'http://localhost/technique/public'
+//axios.defaults.baseURL = 'http://techniqueb1.simpleitrunner.ru/';
 
 /* Вариант с условиями для публикаций 
 if ( process.env.NODE_ENV == 'production' ) {
