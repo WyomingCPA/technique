@@ -68,7 +68,7 @@ const routes: Array<RouteRecordRaw> = [
           {
             name: 'washmashine',
             path: 'washmashine',
-            component: () => import('../pages/admin/forms/form-elements/FormElements.vue'),
+            component: () => import('../pages/admin/products/washmasine.vue'),
             meta: {
               wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/inputs',
             },
