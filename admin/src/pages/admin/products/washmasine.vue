@@ -1,95 +1,233 @@
 <template>
-    <div class="markup-tables flex">
-      <va-card class="flex mb-4">
-        <va-card-title>{{ t('tables.basic') }}</va-card-title>
-        <va-card-content>
-          <div class="table-wrapper">
-            <table class="va-table">
-              <thead>
-                <tr>
-                  <th>{{ t('tables.headings.name') }}</th>
-                  <th>{{ t('tables.headings.email') }}</th>
-                  <th>{{ t('tables.headings.country') }}</th>
-                  <th>{{ t('tables.headings.status') }}</th>
-                </tr>
-              </thead>
-  
-              <tbody>
-                <tr v-for="user in users" :key="user.id">
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.country }}</td>
-                  <td>
-                    <va-badge :text="user.status" :color="getStatusColor(user.status)" />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </va-card-content>
-      </va-card>
-  
-      <va-card>
-        <va-card-title>{{ t('tables.stripedHoverable') }}</va-card-title>
-        <va-card-content>
-          <div class="table-wrapper">
-            <table class="va-table va-table--striped va-table--hoverable">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Country</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-  
-              <tbody>
-                <tr v-for="user in users" :key="user.id">
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.country }}</td>
-                  <td>
-                    <va-badge :text="user.status" :color="getStatusColor(user.status)" />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </va-card-content>
-      </va-card>
+  <section class="tables">
+    <div class="page-header">
+      <h3 class="page-title">Продукты</h3>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="javascript:void(0);">Table</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Все группы</li>
+        </ol>
+      </nav>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-    import { ref } from 'vue'
-    import { useI18n } from 'vue-i18n'
-    import data from '../../../../data/tables/markup-table/data.json'
-  
-    const { t } = useI18n()
-  
-    const users = ref(data.slice(0, 8))
-  
-    function getStatusColor(status: string) {
-      if (status === 'paid') {
-        return 'success'
-      }
-  
-      if (status === 'processing') {
-        return 'info'
-      }
-  
-      return 'danger'
-    }
-  </script>
-  
-  <style lang="scss">
-    .markup-tables {
-      .table-wrapper {
-        overflow: auto;
-      }
-  
-      .va-table {
-        width: 100%;
-      }
-    }
-  </style>
+    <div class="row">
+      <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title"></h4>
+                        <b-row>
+              <div class="col-sm-7">
+                <b-form-group
+                  label="Filter"
+                  label-for="filter-input"
+                  label-cols-sm="3"
+                  label-align-sm="right"
+                  label-size="sm"
+                  class="mb-0"
+                >
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="filter-input"
+                      v-model="filter"
+                      type="search"
+                      placeholder="Type to Search"
+                    ></b-form-input>
+
+                    <b-input-group-append>
+                      <b-button :disabled="!filter" @click="filter = ''"
+                        >Clear</b-button
+                      >
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
+              </div>
+            </b-row>
+            <b-row>
+              <div class="col-sm-12">
+                <span v-for="(thing, index) in listPrice" :key="index"
+                  ><a href="#" @click="filterPrice(index)">
+                    {{ index }}({{ thing }})
+                  </a></span
+                >
+              </div>
+            </b-row>
+            <b-table
+              responsive
+              :busy="loading"
+              :items="items"
+              :fields="fields"
+              :sort-by.sync="sortBy"
+              :sort-desc.sync="sortDesc"
+              :filter="filter"
+              :filter-included-fields="filterOn"
+              show-empty
+              small
+            >
+              <template #table-busy>
+                <div class="text-center text-danger my-2">
+                  <b-spinner class="align-middle"></b-spinner>
+                  <strong>Loading...</strong>
+                </div>
+              </template>
+              <template #cell(actions)="row">
+                <b-button
+                  size="sm"
+                  @click="setLearn(row.item, row.index, $event.target)"
+                  class="mr-1"
+                >
+                  Повторил
+                </b-button>
+              </template>
+              <template v-slot:cell(thumbnail)="data">
+                <a
+                  :href="'https://www.techprom.ru' + data.item.link"
+                  target="_blank"
+                  ><img
+                    :src="'https://www.techprom.ru' + data.value"
+                    class="img-thumbnail rounded-0"
+                /></a>
+              </template>
+            </b-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+<script>
+import axios from "axios";
+
+export default {
+  name: "product-all",
+  components: {},
+  data() {
+    return {
+      filter: null,
+      filterOn: [],
+      listPrice: Array,
+      loading: false,
+      sortBy: "count_learn",
+      sortDesc: false,
+      countSubscriber: 0,
+      idGroup: "",
+      idProduct: "",
+      items: Array,
+      infoModal: {
+        id: "info-modal",
+        title: "",
+        content: "",
+      },
+      fields: [
+        {
+          key: "thumbnail",
+          label: "img",
+          //formatter(value) {
+          //  return `https://www.techprom.ru${value}`;
+          //},
+        },
+        {
+          key: "name",
+          label: "Название",
+          sortable: true,
+        },
+        {
+          key: "count_learn",
+          label: "Количество повторений",
+          sortable: true,
+        },
+        {
+          key: "price",
+          label: "Цена",
+          sortable: true,
+        },
+        {
+          key: "updated_at",
+          label: "Последнее обновление",
+          sortable: true,
+          // Variant applies to the whole column, including the header and footer
+        },
+        { key: "actions", label: "Actions" },
+      ],
+    };
+  },
+  methods: {
+    filterPrice: function (param) {
+      this.filter=param;
+    },
+    setLearn(item, index, button) {
+      this.loading = true;
+      this.idProduct = item.id;
+      console.log(item.id);
+      let self = this;
+      axios.get("/sanctum/csrf-cookie").then((response) => {
+        axios
+          .post("/api/product/set-learn", {
+            id_product: self.idProduct,
+          })
+          .then((response) => {
+            if (response.status) {
+              console.log("Вызвали алерт");
+              this.getWashProduct();
+              this.loading = false;
+            } else {
+              console.log("Не работает");
+              console.log(response.status);
+              this.loading = false;
+            }
+          })
+          .catch(function (error) {
+            console.log(response);
+            console.error(error);
+            this.loading = false;
+          });
+      });
+    },
+
+    getWashProduct() {
+      let self = this;
+      axios
+        .get("/api/product/washmashine")
+        .then(function (response) {
+          self.items = response.data.products;
+          self.listPrice = response.data.price;
+          console.log(response.data.groups);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    },
+    resetInfoModal() {
+      this.infoModal.title = "";
+      this.infoModal.content = "";
+    },
+    async handleSubmit() {
+      let self = this;
+      axios.get("/sanctum/csrf-cookie").then((response) => {
+        axios
+          .post("/api/group/set-subscriber", {
+            count_subscriber: this.countSubscriber,
+            id_group: self.idGroup,
+          })
+          .then((response) => {
+            if (response.status) {
+              console.log("Вызвали алерт");
+              this.getGroups();
+              this.$refs["my-modal"].hide();
+            } else {
+              console.log("Не работает");
+              console.log(response.status);
+            }
+          })
+          .catch(function (error) {
+            console.log(response);
+            console.error(error);
+          });
+      });
+    },
+  },
+  mounted: function () {
+    this.getWashProduct();
+  },
+};
+</script>
