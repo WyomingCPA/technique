@@ -12,10 +12,11 @@ import axios from 'axios'
 
 const app = createApp(App)
 
+axios.defaults.withCredentials = true
 
 axios.defaults.baseURL = 'http://localhost/technique/public'
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.withCredentials = true
+
 
 app.use(stores)
 app.use(router)
