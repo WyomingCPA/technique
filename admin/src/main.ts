@@ -8,7 +8,14 @@ import router from './router'
 import vuesticGlobalConfig from './services/vuestic-ui/global-config'
 import App from './App.vue'
 
+import axios from 'axios'
+
 const app = createApp(App)
+
+
+axios.defaults.baseURL = 'http://localhost/technique/public'
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.withCredentials = true
 
 app.use(stores)
 app.use(router)

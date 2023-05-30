@@ -13,14 +13,15 @@ export const useApi = (endpoint = 'api') => {
 	let baseURL
 	
 	if (endpoint === 'api') {
-		baseURL = API_HOST + API_PATH || 'http://localhost/technique/public/api'
+		baseURL = API_HOST + API_PATH || 'http://localhost/technique/public/api'	
+		console.log(baseURL);
 	} else if (endpoint === 'web') {
 		baseURL = API_HOST || 'http://localhost:8000'
 	}
 
 	const axiosInstance = axios.create({
 		baseURL,
-		headers: { 'X-Requested-With': 'XMLHttpRequest' },
+		headers: { 'X-Requested-With': 'XMLHttpRequest',  },
 		withCredentials: true,
 	})
 
