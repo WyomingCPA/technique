@@ -9,7 +9,11 @@
   </div>
 
   <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
-    @filtered="filteredCount = $event.items.length" />
+    @filtered="filteredCount = $event.items.length">
+    <template #cell(actions)="{ rowData }">
+      <va-button @click="setLearn(rowData.id)">Повторил</va-button>
+    </template>
+    </va-data-table>
 
   <va-alert class="!mt-6" color="info" outline>
     Number of filtered items:
@@ -17,6 +21,7 @@
   </va-alert>
 </template>
 <script>
+import { array } from "@amcharts/amcharts5";
 import axios from "axios";
 import debounce from "lodash/debounce.js";
 
@@ -24,17 +29,21 @@ export default {
   name: "product-all",
   components: {},
   data() {
-    
+    const items = [];
+    const input = "";
     const columns = [
-      { key: "id", sortable: true },
-      { key: "username", sortable: true },
       { key: "name", sortable: true },
-      { key: "email", sortable: true },
-      { key: "address.zipcode", label: "Zipcode" },
+      { key: "count_learn", sortable: true },
+      { key: "actions", width: 80 },
     ];
     return {
-      items: Array,
+      items,
       columns,
+      input,
+      filter: input,
+      isDebounceInput: false,
+      isCustomFilteringFn: false,
+      filteredCount: items.length,
     };
   },
   methods: {
@@ -56,10 +65,11 @@ export default {
     filterPrice: function (param) {
       this.filter = param;
     },
-    setLearn(item, index, button) {
+
+    setLearn(id) {
       this.loading = true;
-      this.idProduct = item.id;
-      console.log(item.id);
+      this.idProduct = id;
+      console.log(id);
       let self = this;
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
@@ -130,5 +140,40 @@ export default {
   mounted: function () {
     this.getWashProduct();
   },
+  computed: {
+    customFilteringFn() {
+      return this.isCustomFilteringFn ? this.filterExact : undefined;
+    },
+  },
+  watch: {
+    input(newValue) {
+      if (this.isDebounceInput) {
+        this.debouncedUpdateFilter(newValue);
+      } else {
+        this.updateFilter(newValue);
+      }
+    },
+  },
 };
 </script>
+<style lang="scss" scoped>
+.table-crud {
+  --va-form-element-default-width: 0;
+
+  .va-input {
+    display: block;
+  }
+
+  &__slot {
+    th {
+      vertical-align: middle;
+    }
+  }
+}
+
+.modal-crud {
+  .va-input {
+    display: block;
+  }
+}
+</style>
