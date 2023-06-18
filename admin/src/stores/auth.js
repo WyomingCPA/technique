@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user.js'
 import { useApi } from '../api/useAPI'
 const web = useApi('api')
-
+import axios from 'axios'
 export const useAuthStore = defineStore({
 	id: 'auth',
 
@@ -19,12 +19,13 @@ export const useAuthStore = defineStore({
 			let newUserState = { ...this.$state, ...payload }
 			localStorage.removeItem('AUTH_STATE')
 			localStorage.setItem('AUTH_STATE', JSON.stringify(newUserState))
-			this.$reset()
+			//this.$reset()
 		},
 		async login({ email, password }) {
 			const user = useUserStore()
 			try {
-				await web.post('/login', { email, password })
+				await axios.get('sanctum/csrf-cookie', {withCredentials: true})
+				await axios.post('api/login', { email, password })
 				this.updateState({ email, isLoggedIn: true })
 				await user.storeInfo()
 			} catch (error) {

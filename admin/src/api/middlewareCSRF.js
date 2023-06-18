@@ -16,14 +16,14 @@ const getCookiesArray = () => document.cookie.split(';').reduce((cookieArray, co
 const middlewareCSFR = async axiosconfig => {
 	let cookies = getCookiesArray()
 	let isTokenMissing = !cookies.includes('XSRF-TOKEN')
-
+    console.log(cookies);
 	let methodsNeedCSRF = ['post', 'put', 'delete'] //other methods you want to add here
 	let doesMethodRequireCSRF = methodsNeedCSRF.includes( axiosconfig.method )
-
+    
 	if ( isTokenMissing && doesMethodRequireCSRF ) {
 		// then first get the CSRF Token 
 		let pathCSFR = '/sanctum/csrf-cookie'
-
+		
 		let urlToCall = `${import.meta.env.API_HOST || 'http://localhost/technique/public'}${pathCSFR}`
 		await axios.get(urlToCall, {withCredentials:true})
 		// then continue with the request 

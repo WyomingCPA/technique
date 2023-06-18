@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useApi } from '../api/useAPI.js'
-
+import axios from 'axios'
 const api = useApi()
 
 export const useUserStore = defineStore({
@@ -21,7 +21,7 @@ export const useUserStore = defineStore({
 		},
 
 		async storeInfo() {
-			let { data: userInfo } = await api.get('/user')
+			let { data: userInfo } = await axios.get('api/user', {withCredentials: true})
 			localStorage.setItem('USER_INFO', JSON.stringify(userInfo))
 			this.$reset()
 		},
