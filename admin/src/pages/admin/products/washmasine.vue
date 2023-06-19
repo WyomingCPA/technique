@@ -33,6 +33,7 @@ export default {
     const input = "";
     const columns = [
       { key: "name", sortable: true },
+      { key: "price", sortable: true },
       { key: "count_learn", sortable: true },
       { key: "actions", width: 80 },
     ];
