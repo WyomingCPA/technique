@@ -8,13 +8,18 @@
     </div>
   </div>
   <div class="flex flex-wrap gap-6 mb-6">
-    <span v-for="(thing, index) in listPrice" :key="index"><a href="#" @click="filterPrice(index)">
-        {{ index }}({{ thing }})
-      </a></span>
+    <span v-for="(thing, index) in listPrice" :key="index"
+      ><a href="#" @click="filterPrice(index)"> {{ index }}({{ thing }}) </a></span
+    >
   </div>
 
-  <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
-    @filtered="filteredCount = $event.items.length">
+  <va-data-table
+    :items="items"
+    :columns="columns"
+    :filter="filter"
+    :filter-method="customFilteringFn"
+    @filtered="filteredCount = $event.items.length"
+  >
     <template #cell(actions)="{ rowData }">
       <va-button @click="setLearn(rowData.id)">Повторил</va-button>
     </template>
@@ -26,162 +31,162 @@
   </va-alert>
 </template>
 <script>
-import { array } from "@amcharts/amcharts5";
-import axios from "axios";
-import debounce from "lodash/debounce.js";
+  import { array } from '@amcharts/amcharts5'
+  import axios from 'axios'
+  import debounce from 'lodash/debounce.js'
 
-export default {
-  name: "product-all",
-  components: {},
-  data() {
-    const items = [];
-    const input = "";
-    const columns = [
-      { key: "name", sortable: true },
-      { key: "price", sortable: true },
-      { key: "count_learn", sortable: true },
-      { key: "actions", width: 80 },
-    ];
-    return {
-      items,
-      columns,
-      input,
-      filter: input,
-      isDebounceInput: false,
-      isCustomFilteringFn: false,
-      filteredCount: items.length,
-      listPrice: Array,
-    };
-  },
-  methods: {
-    filterExact(source) {
-      if (this.filter === "") {
-        return true;
+  export default {
+    name: 'ProductAll',
+    components: {},
+    data() {
+      const items = []
+      const input = ''
+      const columns = [
+        { key: 'name', sortable: true },
+        { key: 'price', sortable: true },
+        { key: 'count_learn', sortable: true },
+        { key: 'actions', width: 80 },
+      ]
+      return {
+        items,
+        columns,
+        input,
+        filter: input,
+        isDebounceInput: false,
+        isCustomFilteringFn: false,
+        filteredCount: items.length,
+        listPrice: Array,
       }
-      return source?.toString?.() === this.filter;
     },
+    methods: {
+      filterExact(source) {
+        if (this.filter === '') {
+          return true
+        }
+        return source?.toString?.() === this.filter
+      },
 
-    updateFilter(filter) {
-      this.filter = filter;
-    },
+      updateFilter(filter) {
+        this.filter = filter
+      },
 
-    debouncedUpdateFilter: debounce(function (filter) {
-      this.updateFilter(filter);
-    }, 600),
+      debouncedUpdateFilter: debounce(function (filter) {
+        this.updateFilter(filter)
+      }, 600),
 
-    filterPrice: function (param) {
-      this.filter = param;
-      this.input =param;
-    },
+      filterPrice: function (param) {
+        this.filter = param
+        this.input = param
+      },
 
-    setLearn(id) {
-      this.loading = true;
-      this.idProduct = id;
-      console.log(id);
-      let self = this;
-      axios.get("/sanctum/csrf-cookie").then((response) => {
-        axios
-          .post("/api/product/set-learn", {
-            id_product: self.idProduct,
-          })
-          .then((response) => {
-            if (response.status) {
-              console.log("Вызвали алерт");
-              this.getWashProduct();
-              this.loading = false;
-            } else {
-              console.log("Не работает");
-              console.log(response.status);
-              this.loading = false;
-            }
-          })
-          .catch(function (error) {
-            console.log(response);
-            console.error(error);
-            this.loading = false;
-          });
-      });
-    },
-
-    getWashProduct() {
-      let self = this;
-      axios
-        .get("/api/product/washmashine")
-        .then(function (response) {
-          self.items = response.data.products;
-          self.listPrice = response.data.price;
-          console.log(response.data.groups);
+      setLearn(id) {
+        this.loading = true
+        this.idProduct = id
+        console.log(id)
+        let self = this
+        axios.get('/sanctum/csrf-cookie').then((response) => {
+          axios
+            .post('/api/product/set-learn', {
+              id_product: self.idProduct,
+            })
+            .then((response) => {
+              if (response.status) {
+                console.log('Вызвали алерт')
+                this.getWashProduct()
+                this.loading = false
+              } else {
+                console.log('Не работает')
+                console.log(response.status)
+                this.loading = false
+              }
+            })
+            .catch(function (error) {
+              console.log(response)
+              console.error(error)
+              this.loading = false
+            })
         })
-        .catch(function (error) {
-          console.error(error);
-        });
-    },
-    resetInfoModal() {
-      this.infoModal.title = "";
-      this.infoModal.content = "";
-    },
-    async handleSubmit() {
-      let self = this;
-      axios.get("/sanctum/csrf-cookie").then((response) => {
+      },
+
+      getWashProduct() {
+        let self = this
         axios
-          .post("/api/group/set-subscriber", {
-            count_subscriber: this.countSubscriber,
-            id_group: self.idGroup,
-          })
-          .then((response) => {
-            if (response.status) {
-              console.log("Вызвали алерт");
-              this.getGroups();
-              this.$refs["my-modal"].hide();
-            } else {
-              console.log("Не работает");
-              console.log(response.status);
-            }
+          .get('/api/product/washmashine')
+          .then(function (response) {
+            self.items = response.data.products
+            self.listPrice = response.data.price
+            console.log(response.data.groups)
           })
           .catch(function (error) {
-            console.log(response);
-            console.error(error);
-          });
-      });
+            console.error(error)
+          })
+      },
+      resetInfoModal() {
+        this.infoModal.title = ''
+        this.infoModal.content = ''
+      },
+      async handleSubmit() {
+        let self = this
+        axios.get('/sanctum/csrf-cookie').then((response) => {
+          axios
+            .post('/api/group/set-subscriber', {
+              count_subscriber: this.countSubscriber,
+              id_group: self.idGroup,
+            })
+            .then((response) => {
+              if (response.status) {
+                console.log('Вызвали алерт')
+                this.getGroups()
+                this.$refs['my-modal'].hide()
+              } else {
+                console.log('Не работает')
+                console.log(response.status)
+              }
+            })
+            .catch(function (error) {
+              console.log(response)
+              console.error(error)
+            })
+        })
+      },
     },
-  },
-  mounted: function () {
-    this.getWashProduct();
-  },
-  computed: {
-    customFilteringFn() {
-      return this.isCustomFilteringFn ? this.filterExact : undefined;
+    computed: {
+      customFilteringFn() {
+        return this.isCustomFilteringFn ? this.filterExact : undefined
+      },
     },
-  },
-  watch: {
-    input(newValue) {
-      if (this.isDebounceInput) {
-        this.debouncedUpdateFilter(newValue);
-      } else {
-        this.updateFilter(newValue);
-      }
+    watch: {
+      input(newValue) {
+        if (this.isDebounceInput) {
+          this.debouncedUpdateFilter(newValue)
+        } else {
+          this.updateFilter(newValue)
+        }
+      },
     },
-  },
-};
+    mounted: function () {
+      this.getWashProduct()
+    },
+  }
 </script>
 <style lang="scss" scoped>
-.table-crud {
-  --va-form-element-default-width: 0;
+  .table-crud {
+    --va-form-element-default-width: 0;
 
-  .va-input {
-    display: block;
-  }
+    .va-input {
+      display: block;
+    }
 
-  &__slot {
-    th {
-      vertical-align: middle;
+    &__slot {
+      th {
+        vertical-align: middle;
+      }
     }
   }
-}
 
-.modal-crud {
-  .va-input {
-    display: block;
+  .modal-crud {
+    .va-input {
+      display: block;
+    }
   }
-}
 </style>

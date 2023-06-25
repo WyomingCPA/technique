@@ -8,26 +8,25 @@ import middlewareCSRF from './middlewareCSRF'
  * @returns {AxiosInstance}
  */
 export const useApi = (endpoint = 'api') => {
-	const { API_HOST, API_PATH } = import.meta.env
+  const { API_HOST, API_PATH } = import.meta.env
 
-	let baseURL
-	
-	if (endpoint === 'api') {
-		baseURL = API_HOST + API_PATH || 'http://localhost/technique/public/api'	
+  let baseURL
 
-	} else if (endpoint === 'web') {
-		baseURL = API_HOST || 'http://localhost'
-	}
+  if (endpoint === 'api') {
+    baseURL = API_HOST + API_PATH || 'http://localhost/technique/public/api'
+  } else if (endpoint === 'web') {
+    baseURL = API_HOST || 'http://localhost'
+  }
 
-	const axiosInstance = axios.create({
-		baseURL,
-		headers: { 'X-Requested-With': 'XMLHttpRequest',  },
-		withCredentials: true,
-	})
+  const axiosInstance = axios.create({
+    baseURL,
+    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    withCredentials: true,
+  })
 
-	axiosInstance.interceptors.request.use( middlewareCSRF, err => Promise.reject(err)) 
+  axiosInstance.interceptors.request.use(middlewareCSRF, (err) => Promise.reject(err))
 
-	axiosInstance.interceptors.response.use(resp => resp, middleware401)
+  axiosInstance.interceptors.response.use((resp) => resp, middleware401)
 
-	return axiosInstance
+  return axiosInstance
 }

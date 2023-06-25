@@ -16,7 +16,6 @@
     <template #center>
       <div class="app-navbar-center">
         <span class="app-navbar-center__text mr-2">{{ t('navbar.messageUs') }}</span>
-
       </div>
     </template>
     <template #right>

@@ -24,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         name: 'dashboard',
         meta: {
-          authRequired: true
+          authRequired: true,
         },
         path: 'dashboard',
         component: () => import('../pages/admin/dashboard/Dashboard.vue'),
