@@ -59,8 +59,18 @@ class ProductController extends Controller
 
     public function tv32(Request $request)
     {
+        $products = Product::where('status', true)->where('category_id', '=', 6)->where('city', 'kor')->get();
+        $list_price = $products->pluck('price');
+        $price = [];
+        foreach ($list_price as $item)
+        {
+            $price[] = (int)$item;
+        }
+
+        $result_price = array_count_values($price);
         return response([
-            'products' => Product::where('status', true)->where('category_id', '=', 6)->where('city', 'kor')->get(),
+            'products' => $products,
+            'price' => $result_price,
         ], 200);
     }
 
@@ -73,8 +83,17 @@ class ProductController extends Controller
 
     public function tv50(Request $request)
     {
+        $products = Product::where('status', true)->where('category_id', '=', 5)->where('city', 'kor')->get();
+        $list_price = $products->pluck('price');
+        $price = [];
+        foreach ($list_price as $item)
+        {
+            $price[] = (int)$item;
+        }
+        $result_price = array_count_values($price);
         return response([
-            'products' => Product::where('status', true)->where('category_id', '=', 5)->where('city', 'kor')->get(),
+            'products' => $products,
+            'price' => $result_price,
         ], 200);
     }
 

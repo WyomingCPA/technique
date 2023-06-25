@@ -60,10 +60,7 @@ const routes: Array<RouteRecordRaw> = [
           {
             name: 'refrigerator',
             path: 'refrigerator',
-            component: () => import('../pages/admin/forms/form-elements/FormElements.vue'),
-            meta: {
-              wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/inputs',
-            },
+            component: () => import('../pages/admin/products/Refrigerator.vue'),
           },
           {
             name: 'washmashine',
@@ -73,12 +70,12 @@ const routes: Array<RouteRecordRaw> = [
           {
             name: 'tv32',
             path: 'tv32',
-            component: () => import('../pages/admin/forms/form-elements/FormElements.vue'),
+            component: () => import('../pages/admin/products/Tv32.vue'),
           },
           {
             name: 'tv50',
             path: 'tv50',
-            component: () => import('../pages/admin/forms/form-elements/FormElements.vue'),
+            component: () => import('../pages/admin/products/Tv50.vue'),
           },
           {
             name: 'smart',
