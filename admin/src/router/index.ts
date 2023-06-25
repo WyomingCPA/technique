@@ -68,42 +68,27 @@ const routes: Array<RouteRecordRaw> = [
           {
             name: 'washmashine',
             path: 'washmashine',
-            component: () => import('../pages/admin/products/washmasine.vue'),
-            meta: {
-              wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/inputs',
-            },
+            component: () => import('../pages/admin/products/Washmasine.vue'),
           },
           {
             name: 'tv32',
             path: 'tv32',
             component: () => import('../pages/admin/forms/form-elements/FormElements.vue'),
-            meta: {
-              wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/inputs',
-            },
           },
           {
             name: 'tv50',
             path: 'tv50',
             component: () => import('../pages/admin/forms/form-elements/FormElements.vue'),
-            meta: {
-              wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/inputs',
-            },
           },
           {
             name: 'smart',
             path: 'smart',
-            component: () => import('../pages/admin/forms/form-elements/FormElements.vue'),
-            meta: {
-              wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/inputs',
-            },
+            component: () => import('../pages/admin/products/Smart.vue'),
           },
           {
             name: 'laptop',
             path: 'laptop',
-            component: () => import('../pages/admin/forms/form-elements/FormElements.vue'),
-            meta: {
-              wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/inputs',
-            },
+            component: () => import('../pages/admin/products/Laptop.vue'),
           },
         ],
       },

@@ -7,13 +7,18 @@
       <va-checkbox v-model="isDebounceInput" label="Debounce input" />
     </div>
   </div>
+  <div class="flex flex-wrap gap-6 mb-6">
+    <span v-for="(thing, index) in listPrice" :key="index"><a href="#" @click="filterPrice(index)">
+        {{ index }}({{ thing }})
+      </a></span>
+  </div>
 
   <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
     @filtered="filteredCount = $event.items.length">
     <template #cell(actions)="{ rowData }">
       <va-button @click="setLearn(rowData.id)">Повторил</va-button>
     </template>
-    </va-data-table>
+  </va-data-table>
 
   <va-alert class="!mt-6" color="info" outline>
     Number of filtered items:
@@ -45,6 +50,7 @@ export default {
       isDebounceInput: false,
       isCustomFilteringFn: false,
       filteredCount: items.length,
+      listPrice: Array,
     };
   },
   methods: {
@@ -65,6 +71,7 @@ export default {
 
     filterPrice: function (param) {
       this.filter = param;
+      this.input =param;
     },
 
     setLearn(id) {

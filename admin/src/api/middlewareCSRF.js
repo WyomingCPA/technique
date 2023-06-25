@@ -16,7 +16,6 @@ const getCookiesArray = () => document.cookie.split(';').reduce((cookieArray, co
 const middlewareCSFR = async axiosconfig => {
 	let cookies = getCookiesArray()
 	let isTokenMissing = !cookies.includes('XSRF-TOKEN')
-    console.log(cookies);
 	let methodsNeedCSRF = ['post', 'put', 'delete'] //other methods you want to add here
 	let doesMethodRequireCSRF = methodsNeedCSRF.includes( axiosconfig.method )
     
