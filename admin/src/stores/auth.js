@@ -19,7 +19,7 @@ export const useAuthStore = defineStore({
       let newUserState = { ...this.$state, ...payload }
       localStorage.removeItem('AUTH_STATE')
       localStorage.setItem('AUTH_STATE', JSON.stringify(newUserState))
-      //this.$reset()
+      this.$reset()
     },
     async login({ email, password }) {
       const user = useUserStore()
