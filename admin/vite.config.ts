@@ -7,7 +7,7 @@ import VueI18nPlugin from '@intlify/vite-plugin-vue-i18n'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: process.env.NODE_ENV === 'production'
-  ? './' // prod
+  ? '/' // prod
   : '/', // dev
   plugins: [
     vue(),

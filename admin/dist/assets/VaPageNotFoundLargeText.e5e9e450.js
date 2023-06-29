@@ -1,1 +1,0 @@
-import{_ as e}from"./VaPageNotFound.2f6af687.js";import{b as a,o as t,f as n,m as o,p as _}from"./index.36edbacb.js";const r=_("div",{class:"va-page-not-found-large-text__number"},"404",-1),p=a({__name:"VaPageNotFoundLargeText",setup(s){return(m,d)=>(t(),n(e,{class:"va-page-not-found-large-text"},{image:o(()=>[r]),_:1}))}});export{p as default};
