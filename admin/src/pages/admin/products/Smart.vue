@@ -13,7 +13,14 @@
         <span v-for="(thing, index) in listPrice" :key="index"><a href="#" @click="filterPrice(index)"> {{ index }}({{
           thing }}) </a></span>
       </div>
-
+      <va-select v-model="multiSelect" class="col-span-1" label="Multiple select with content slot"
+        placeholder="Start to write..." :options="options" multiple autocomplete highlight-matched-text>
+        <template #content="{ value }">
+          <va-chip v-for="chip in value" :key="chip" class="mr-1" size="small">
+            {{ chip }}
+          </va-chip>
+        </template>
+      </va-select>
       <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
         @filtered="filteredCount = $event.items.length" :loading=loading>
         <template #cell(actions)="{ rowData }">
@@ -32,11 +39,15 @@
 import { array } from '@amcharts/amcharts5'
 import axios from 'axios'
 import debounce from 'lodash/debounce.js'
+import { ref } from 'vue'
 
 export default {
   name: 'ProductAll',
   components: {},
   data() {
+    const options = ['samsung', 'realme', 'Xiaomi', 'Tecno', 'BQ'];
+    const singleSelect = ref('')
+    const multiSelect = ref([])
     const items = [];
     const input = '';
     const columns = [
@@ -47,6 +58,9 @@ export default {
     ]
     return {
       loading: false,
+      options,
+      singleSelect,
+      multiSelect,
       items,
       columns,
       input,
@@ -62,6 +76,7 @@ export default {
       if (this.filter === '') {
         return true
       }
+      console.log(filter);
       return source?.toString?.() === this.filter
     },
 
@@ -115,7 +130,7 @@ export default {
           self.items = response.data.products;
           self.listPrice = response.data.price;
           console.log(response.data.groups);
-          self.loading=false;
+          self.loading = false;
         })
         .catch(function (error) {
           console.error(error)
@@ -166,28 +181,10 @@ export default {
   },
   mounted: function () {
     this.getWashProduct()
-    
+
   },
 }
 </script>
 <style lang="scss" scoped>
-.table-crud {
-  --va-form-element-default-width: 0;
 
-  .va-input {
-    display: block;
-  }
-
-  &__slot {
-    th {
-      vertical-align: middle;
-    }
-  }
-}
-
-.modal-crud {
-  .va-input {
-    display: block;
-  }
-}
 </style>
