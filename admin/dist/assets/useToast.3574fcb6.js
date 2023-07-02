@@ -1,1 +1,0 @@
-import{K as l,L as a,M as c,N as i}from"./index.df261148.js";const I=()=>{var s;const e=(s=l())==null?void 0:s.appContext,n=[];return{init:o=>{const t=a(o,e);return t&&n.push(t),t},close:o=>c(o),closeAll:(o=!1)=>i(o?void 0:e),closeAllCreatedInThisHook:()=>{n.forEach(o=>c(o))}}};export{I as u};
