@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -160,4 +162,28 @@ class ProductController extends Controller
             'status' => true,
         ], 200);
     }
+
+    public function favorite(Request $request)
+    {
+        $models = Auth::user()->favoritesProduct()->where('status', true)->get();
+        return response([
+            'products' => $models,
+        ], 200);
+    }
+    public function setFavorite(Request $request)
+    {
+        $isFavorite = $request->is_favorite;
+        if ($isFavorite)
+        {
+            Auth::user()->favoritesProduct()->attach($request->id_product);
+        }
+        else {
+            Auth::user()->favoritesProduct()->detach($request->id_product);
+        }
+        
+        return response([
+            'status' => true,
+        ], 200);
+    }
+    
 }

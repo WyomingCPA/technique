@@ -64,6 +64,11 @@ const routes: Array<RouteRecordRaw> = [
             path: 'laptop',
             component: () => import('../pages/admin/products/Laptop.vue'),
           },
+          {
+            name: 'favorite',
+            path: 'favorite',
+            component: () => import('../pages/admin/products/Favorite.vue'),
+          },
         ],
       },
       UIRoute,

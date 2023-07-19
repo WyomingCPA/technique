@@ -12,13 +12,21 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'slug', 'description', 'link',
-        'price', 'status', 'category_id', 'count_learn',
-        'city', 'thumbnail'
+        'name',
+        'slug',
+        'description',
+        'link',
+        'price',
+        'status',
+        'category_id',
+        'count_learn',
+        'city',
+        'thumbnail'
     ];
+    protected $appends = ['isFavorite',];
 
     protected $casts = [
-        'status'    =>  'boolean',
+        'status' => 'boolean',
     ];
     public function getUpdatedAtAttribute($value)
     {
@@ -28,5 +36,14 @@ class Product extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
+    }
+    public function getIsFavoriteAttribute()
+    {
+        $model = Favorite::where('product_id', '=', $this->id)->count();
+        if ($model != 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

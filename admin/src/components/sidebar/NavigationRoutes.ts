@@ -50,6 +50,10 @@ export default {
           name: 'laptop',
           displayName: 'menu.laptop',
         },
+        {
+          name: 'favorite',
+          displayName: 'menu.favorite',
+        },
       ],
     },
   ] as INavigationRoute[],

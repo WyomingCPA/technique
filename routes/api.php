@@ -29,7 +29,10 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::get('tv50', 'ProductController@tv50');
     Route::get('smart', 'ProductController@smart');
     Route::get('laptop', 'ProductController@laptop');
+    Route::get('favorite', 'ProductController@favorite');
     Route::post('set-learn', 'ProductController@learn');
+    Route::post('set-favorite', 'ProductController@setFavorite');
+    
 });
 
 Route::group(['prefix' => 'category', 'middleware' => 'auth:sanctum'], function () {

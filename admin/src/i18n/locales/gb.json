@@ -344,7 +344,8 @@
     "tv32": "Tv32",
     "tv50": "Tv50",
     "smart": "Смартфоны",
-    "laptop": "Ноутбуки"
+    "laptop": "Ноутбуки",
+    "favorite": "Избранные"
   },
   "messages": {
     "all": "See all messages",
