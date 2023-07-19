@@ -26,6 +26,9 @@
         <template #cell(actions)="{ rowData }">
           <va-button @click="setLearn(rowData.id)">Повторил</va-button>
         </template>
+        <template #cell(favorite)="{ rowData }">
+          <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)"/>
+        </template>
       </va-data-table>
 
       <va-alert class="!mt-6" color="info" outline>
@@ -53,8 +56,9 @@ export default {
     const columns = [
       { key: 'name', sortable: true },
       { key: 'price', sortable: true },
-      { key: 'count_learn', sortable: true },
+      { key: 'count_learn', sortable: true, width: 20 },
       { key: 'actions', width: 80 },
+      { key: 'favorite', width: 50 },
     ]
     return {
       loading: false,
@@ -135,6 +139,37 @@ export default {
         .catch(function (error) {
           console.error(error)
         })
+    },
+    setFavorite(id, isFavorite) {
+      this.loading = true
+      this.idProduct = id
+      this.isFavor = isFavorite
+      console.log(id)
+      let self = this
+      axios.get('/sanctum/csrf-cookie').then((response) => {
+        axios
+          .post('/api/product/set-favorite', {
+            id_product: self.idProduct,
+            is_favorite: self.isFavor,
+
+          })
+          .then((response) => {
+            if (response.status) {
+              console.log('Вызвали алерт')
+              this.getWashProduct()
+              this.loading = false
+            } else {
+              console.log('Не работает')
+              console.log(response.status)
+              this.loading = false
+            }
+          })
+          .catch(function (error) {
+            console.log(response)
+            console.error(error)
+            this.loading = false
+          })
+      })
     },
     resetInfoModal() {
       this.infoModal.title = ''
