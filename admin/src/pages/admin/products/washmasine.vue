@@ -15,12 +15,12 @@
       </div>
 
       <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
-        @filtered="filteredCount = $event.items.length">
+        v-model:sort-by="sortBy" v-model:sorting-order="sortingOrder" @filtered="filteredCount = $event.items.length">
         <template #cell(actions)="{ rowData }">
           <va-button @click="setLearn(rowData.id)">Повторил</va-button>
         </template>
-        <template #cell(favorite)="{ rowData }">
-          <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)"/>
+        <template #cell(isFavorite)="{ rowData }">
+          <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)" />
         </template>
       </va-data-table>
 
@@ -47,8 +47,13 @@ export default {
       { key: 'price', sortable: true },
       { key: 'count_learn', sortable: true, width: 20 },
       { key: 'actions', width: 80 },
-      { key: 'favorite', width: 50 },
+      { key: 'isFavorite', width: 50, sortable: true, },
     ]
+    const sortingOrderOptions = [
+      { text: "asc", value: "asc" },
+      { text: "desc", value: "desc" },
+      { text: "no sorting", value: null },
+    ];
     return {
       value: true,
       items,
@@ -59,6 +64,10 @@ export default {
       isCustomFilteringFn: false,
       filteredCount: items.length,
       listPrice: Array,
+      sortBy: "isFavorite",
+      sortingOrder: "desc",
+      sortingOrderOptions,
+
     }
   },
   methods: {
@@ -182,6 +191,11 @@ export default {
           })
       })
     },
+    sortByOptions() {
+      return this.columns
+        .map(({ name, key, sortable }) => sortable && (name || key))
+        .filter(Boolean);
+    },
   },
   computed: {
     customFilteringFn() {
@@ -202,6 +216,4 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

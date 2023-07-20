@@ -13,21 +13,14 @@
         <span v-for="(thing, index) in listPrice" :key="index"><a href="#" @click="filterPrice(index)"> {{ index }}({{
           thing }}) </a></span>
       </div>
-      <va-select v-model="multiSelect" class="col-span-1" label="Multiple select with content slot"
-        placeholder="Start to write..." :options="options" multiple autocomplete highlight-matched-text>
-        <template #content="{ value }">
-          <va-chip v-for="chip in value" :key="chip" class="mr-1" size="small">
-            {{ chip }}
-          </va-chip>
-        </template>
-      </va-select>
+
       <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
-        @filtered="filteredCount = $event.items.length" :loading=loading>
+        v-model:sort-by="sortBy" v-model:sorting-order="sortingOrder" @filtered="filteredCount = $event.items.length">
         <template #cell(actions)="{ rowData }">
           <va-button @click="setLearn(rowData.id)">Повторил</va-button>
         </template>
-        <template #cell(favorite)="{ rowData }">
-          <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)"/>
+        <template #cell(isFavorite)="{ rowData }">
+          <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)" />
         </template>
       </va-data-table>
 
@@ -58,8 +51,13 @@ export default {
       { key: 'price', sortable: true },
       { key: 'count_learn', sortable: true, width: 20 },
       { key: 'actions', width: 80 },
-      { key: 'favorite', width: 50 },
+      { key: 'isFavorite', width: 50, sortable: true, },
     ]
+    const sortingOrderOptions = [
+      { text: "asc", value: "asc" },
+      { text: "desc", value: "desc" },
+      { text: "no sorting", value: null },
+    ];
     return {
       loading: false,
       options,
@@ -73,6 +71,9 @@ export default {
       isCustomFilteringFn: false,
       filteredCount: items.length,
       listPrice: Array,
+      sortBy: "isFavorite",
+      sortingOrder: "desc",
+      sortingOrderOptions,
     }
   },
   methods: {
@@ -199,6 +200,11 @@ export default {
           })
       })
     },
+    sortByOptions() {
+      return this.columns
+        .map(({ name, key, sortable }) => sortable && (name || key))
+        .filter(Boolean);
+    },
   },
   computed: {
     customFilteringFn() {
@@ -220,6 +226,4 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

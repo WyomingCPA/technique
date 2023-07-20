@@ -43,7 +43,7 @@ class ProductController extends Controller
     
     public function washmashine(Request $request)
     {
-        $products = Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kor')->get();
+        $products = Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kor')->orderBy('price', 'desc')->get();
         $list_price = $products->pluck('price');
         $price = [];
         foreach ($list_price as $item)
