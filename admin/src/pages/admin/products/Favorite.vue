@@ -18,14 +18,27 @@
 
             <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
                 @filtered="filteredCount = $event.items.length">
+                <template #cell(id)="{ rowData }">
+                    <a target="_blank" :href="'edit/' + rowData.id">{{ rowData.id }}</a>
+                </template>
+                <template #cell(name)="{ row, isExpanded }">
+                    <va-button @click="row.toggleRowDetails()" :icon="isExpanded ? 'va-arrow-up' : 'va-arrow-down'"
+                        preset="secondary" class="w-full">
+                        {{ isExpanded ? row.itemKey.name : row.itemKey.name }}
+                    </va-button>
+                </template>
+                <template #expandableRow="{ rowData }">
+                    <div class="flex gap-2">
+                        <div v-html="rowData.description"></div>
+                    </div>
+                </template>
                 <template #cell(actions)="{ rowData }">
                     <va-button @click="setLearn(rowData.id)">Повторил</va-button>
                 </template>
                 <template #cell(favorite)="{ rowData }">
-                    <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)"/>
+                    <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)" />
                 </template>
             </va-data-table>
-
             <va-alert class="!mt-6" color="info" outline>
                 Number of filtered items:
                 <va-chip>{{ filteredCount }}</va-chip>
@@ -45,13 +58,19 @@ export default {
         const items = []
         const input = ''
         const columns = [
-            { key: 'name', sortable: true },
-            { key: 'price', sortable: true },
+            { key: 'id', width: 20 },
+            { key: 'name', sortable: true, width: 20 },
+            { key: 'price', sortable: true, width: 20 },
             { key: 'count_learn', sortable: true, width: 20 },
             { key: 'actions', width: 80 },
             { key: 'favorite', width: 50 },
         ]
         return {
+            infoModal: {
+                id: "info-modal",
+                title: "",
+                content: "",
+            },
             value: true,
             items,
             columns,
@@ -112,6 +131,7 @@ export default {
                     })
             })
         },
+
         setFavorite(id, isFavorite) {
             this.loading = true
             this.idProduct = id

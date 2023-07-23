@@ -32,6 +32,9 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::get('favorite', 'ProductController@favorite');
     Route::post('set-learn', 'ProductController@learn');
     Route::post('set-favorite', 'ProductController@setFavorite');
+
+    Route::get('/edit/{id}', 'ProductController@edit');
+	Route::post('/update', 'ProductController@update');
     
 });
 

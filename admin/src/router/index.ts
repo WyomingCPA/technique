@@ -69,6 +69,11 @@ const routes: Array<RouteRecordRaw> = [
             path: 'favorite',
             component: () => import('../pages/admin/products/Favorite.vue'),
           },
+          {
+            name: 'product-edit',
+            path: 'edit/:id',
+            component: () => import('../pages/admin/products/Edit.vue'),
+          },
         ],
       },
       UIRoute,

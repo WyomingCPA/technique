@@ -185,5 +185,22 @@ class ProductController extends Controller
             'status' => true,
         ], 200);
     }
-    
+    public function edit(Request $request, $id)
+    {
+        return response([
+            'product' => Product::findOrFail($id),
+        ], 200);
+    }
+    public function update(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+        $product->update([
+         
+            'description' => $request->description,
+        ]);
+        
+        return response([
+            'status' => true,
+        ], 200);
+    }
 }

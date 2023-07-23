@@ -22,6 +22,7 @@
     "@amcharts/amcharts5-geodata": "^5.0.3",
     "@fortawesome/fontawesome-free": "^6.1.1",
     "@gtm-support/vue-gtm": "^1.6.0",
+    "@tinymce/tinymce-vue": "^5.1.0",
     "axios": "^0.27.2",
     "chart.js": "^3.8.0",
     "epic-spinners": "^2.0.0",
@@ -39,7 +40,7 @@
     "vue-i18n": "^9.1.10",
     "vue-router": "^4.0.14",
     "vue-yandex-maps": "^0.12.3",
-    "vuestic-ui": "^1.5.0",
+    "vuestic-ui": "^1.7.3",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
