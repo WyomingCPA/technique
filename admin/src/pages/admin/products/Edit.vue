@@ -69,7 +69,7 @@ export default {
                     })
                     .then((response) => {
                         if (response.status) {
-
+                            this.$vaToast.init({ message: 'Описание обновлено', color: 'success' })
                             self.loading = false;
                         } else {
                             console.log("Не работает");
