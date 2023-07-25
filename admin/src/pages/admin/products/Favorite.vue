@@ -3,7 +3,6 @@
         <va-card-content>
             <div class="grid md:grid-cols-2 gap-6 mb-6">
                 <va-input v-model="input" placeholder="Filter..." class="w-full" />
-
                 <div class="flex flex-col gap-6">
                     <va-checkbox v-model="isCustomFilteringFn"
                         label="Use custom filtering function (looks for an exact match)" />
@@ -15,17 +14,17 @@
                 }}({{
     thing }}) </a></span>
             </div>
-
             <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
                 @filtered="filteredCount = $event.items.length">
                 <template #cell(id)="{ rowData }">
                     <a target="_blank" :href="'edit/' + rowData.id">{{ rowData.id }}</a>
                 </template>
                 <template #cell(name)="{ row, isExpanded }">
-                    <va-button @click="row.toggleRowDetails()" :icon="isExpanded ? 'va-arrow-up' : 'va-arrow-down'"
+                    <va-button v-if="row.itemKey.description" @click="row.toggleRowDetails()" :icon="isExpanded ? 'va-arrow-up' : 'va-arrow-down'"
                         preset="secondary" class="w-full">
                         {{ isExpanded ? row.itemKey.name : row.itemKey.name }}
                     </va-button>
+                    <p v-else>{{ row.itemKey.name }}</p>
                 </template>
                 <template #expandableRow="{ rowData }">
                     <div class="flex gap-2">
@@ -62,7 +61,7 @@ export default {
             { key: 'name', sortable: true, width: 20 },
             { key: 'price', sortable: true, width: 20 },
             { key: 'count_learn', sortable: true, width: 20 },
-            { key: 'actions', width: 80 },
+            { key: 'actions', width: 50 },
             { key: 'favorite', width: 50 },
         ]
         return {
@@ -224,4 +223,5 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
