@@ -58,8 +58,8 @@ export default {
         const input = ''
         const columns = [
             { key: 'id', width: 20 },
-            { key: 'name', sortable: true, width: 20 },
             { key: 'price', sortable: true, width: 20 },
+            { key: 'name', sortable: true, width: 20 },
             { key: 'count_learn', sortable: true, width: 20 },
             { key: 'actions', width: 50 },
             { key: 'favorite', width: 50 },

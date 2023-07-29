@@ -11,7 +11,7 @@
                         height: 700,
                         menubar: true,
                         plugins: [
-                          'advlist autolink lists link image charmap print preview anchor',
+                          'advlist link autolink lists image charmap print preview anchor',
                           'searchreplace visualblocks code fullscreen',
                           'insertdatetime media table paste code help wordcount',
                           'codesample toc autosave',
@@ -20,11 +20,11 @@
                           'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image \
                           formatselect | bold italic backcolor | \
            alignleft aligncenter alignright alignjustify | \
-           bullist numlist outdent indent | removeformat | help',
+           bullist numlist outdent indent | removeformat | help | link |',
                       }"
                     />
                 <va-button @click="update()">
-                    Submit
+                    Обновить
                 </va-button>
             </va-form>
         </va-card-content>
