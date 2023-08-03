@@ -45,7 +45,13 @@ class GetStatistics extends Command
         $user = User::select('id')->where('email', 'WyomingCPA@yandex.ru')->first();
         $total_favorite_product = $user->favoritesProduct()->where('status', true)->get()->count();
         $count_all_research_product = Product::where('status', true)->where('city', 'kor')->orderBy('price', 'desc')->get()->sum('count_learn');
-        echo $count_all_research_product . "\n";
+
+        $model = new Statistics;
+        $model->total_all_product = $total_all_product;
+        $model->count_available_product = $count_available_product;
+        $model->total_favorite_product = $total_favorite_product;
+        $model->count_all_research_product = $count_all_research_product;
+        $model->save();
 
         return 0;
     }
