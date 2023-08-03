@@ -1,39 +1,36 @@
 <template>
   <div class="dashboard">
     <dashboard-info-block />
-    <div class="row row-equal">
 
-
-
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import DashboardInfoBlock from './DashboardInfoBlock.vue'
+import { ref } from 'vue'
+import DashboardInfoBlock from './DashboardInfoBlock.vue'
 
-  const dashboardMap = ref()
+const dashboardMap = ref()
 
-  function addAddressToMap({ city, country }: { city: { text: string }; country: string }) {
-    dashboardMap.value.addAddress({ city: city.text, country })
-  }
+function addAddressToMap({ city, country }: { city: { text: string }; country: string }) {
+  dashboardMap.value.addAddress({ city: city.text, country })
+}
 </script>
 
 <style lang="scss">
-  .row-equal .flex {
-    .va-card {
-      height: 100%;
-    }
+.row-equal .flex {
+  .va-card {
+    height: 100%;
   }
+}
 
-  .dashboard {
-    .va-card {
-      margin-bottom: 0 !important;
-      &__title {
-        display: flex;
-        justify-content: space-between;
-      }
+.dashboard {
+  .va-card {
+    margin-bottom: 0 !important;
+
+    &__title {
+      display: flex;
+      justify-content: space-between;
     }
   }
+}
 </style>
