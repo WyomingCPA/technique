@@ -21,8 +21,16 @@
         <div class="flex xs12 sm6 md6">
           <va-card>
             <va-card-content>
-              <h2 class="va-h2 ma-0">{{all_favorite_product_count }}</h2>
+              <h2 class="va-h2 ma-0">{{ all_favorite_product_count }}</h2>
               <p class="no-wrap">Избранные</p>
+            </va-card-content>
+          </va-card>
+        </div>
+        <div class="flex xs12 sm6 md6">
+          <va-card>
+            <va-card-content>
+              <h2 class="va-h2 ma-0">{{ count_all_research_product }}</h2>
+              <p class="no-wrap">Кол-во иследований</p>
             </va-card-content>
           </va-card>
         </div>
@@ -78,6 +86,7 @@ export default defineComponent({
       total_all_product_count: { type: Number },
       all_active_product_count: { type: Number },
       all_favorite_product_count: { type: Number },
+      count_all_research_product: { type: Number },
       isCustomFilteringFn: false,
       sortingOrder: "desc",
     }
@@ -99,6 +108,7 @@ export default defineComponent({
           self.total_all_product_count = response.data.total_all_product_count;
           self.all_active_product_count = response.data.all_active_product_count;
           self.all_favorite_product_count = response.data.all_favorite_product_count;
+          self.count_all_research_product = response.data.count_all_research_product;
 
           console.log(response.data.all_active_product_count);
         })
