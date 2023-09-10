@@ -1,6 +1,16 @@
 <template>
   <div class="row row-equal">
     <div class="flex xl6 xs12 lg6">
+      <div class="col-md-4 grid-margin stretch-card">
+        <va-card>
+          <va-card-title>Статистика по категориям</va-card-title>
+          <va-card-content>
+            <va-data-table :items="all_category_stat"> </va-data-table>
+          </va-card-content>
+        </va-card>
+      </div>
+    </div>
+    <div class="flex xl6 xs12 lg6">
       <div class="row">
         <div class="flex xs12 sm6 md6">
           <va-card>
@@ -38,96 +48,98 @@
     </div>
   </div>
   <div class="row row-equal">
-      <div class="flex xl8 xs12 lg8">
-        <va-card square outlined>
-          <va-card-title>Статистика</va-card-title>
-          <va-card-content>
-            <va-data-table :items="items" :columns="columns" :filter-method="customFilteringFn"
-              v-model:sort-by="sortBy" v-model:sorting-order="sortingOrder"
-              >
-
-            </va-data-table>
-          </va-card-content>
-        </va-card>
-      </div>
+    <div class="flex xl8 xs12 lg8">
+      <va-card square outlined>
+        <va-card-title>Статистика</va-card-title>
+        <va-card-content>
+          <va-data-table
+            :items="items"
+            :columns="columns"
+            :filter-method="customFilteringFn"
+            v-model:sort-by="sortBy"
+            v-model:sorting-order="sortingOrder"
+          >
+          </va-data-table>
+        </va-card-content>
+      </va-card>
     </div>
+  </div>
 </template>
 
 <script>
+  import { array } from '@amcharts/amcharts5'
+  import axios from 'axios'
 
-import { array } from "@amcharts/amcharts5";
-import axios from "axios";
+  import { defineComponent } from 'vue'
 
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  data() {
-    const items = [];
-    const input = '';
-    const columns = [
-      { key: 'id', sortable: true },
-      { key: 'total_all_product', sortable: true },
-      { key: 'total_favorite_product', sortable: true, width: 20 },
-      { key: 'count_all_research_product', width: 80 },
-      { key: 'count_available_product', width: 50, sortable: true, },
-      { key: 'created_at', width: 50, sortable: true, }
-    ]
-    const sortingOrderOptions = [
-      { text: "asc", value: "asc" },
-      { text: "desc", value: "desc" },
-      { text: "no sorting", value: null },
-    ];
-    return {
-      items,
-      columns,
-      input,
-      filter: input,
-      sortBy: "isFavorite",
-      total_all_product_count: { type: Number },
-      all_active_product_count: { type: Number },
-      all_favorite_product_count: { type: Number },
-      count_all_research_product: { type: Number },
-      isCustomFilteringFn: false,
-      sortingOrder: "desc",
-    }
-  },
-  methods: {
-    filterExact(source) {
-      if (this.filter === '') {
-        return true
+  export default defineComponent({
+    data() {
+      const items = []
+      const all_category_stat = []
+      const input = ''
+      const columns = [
+        { key: 'id', sortable: true },
+        { key: 'total_all_product', sortable: true },
+        { key: 'total_favorite_product', sortable: true, width: 20 },
+        { key: 'count_all_research_product', width: 80 },
+        { key: 'count_available_product', width: 50, sortable: true },
+        { key: 'created_at', width: 50, sortable: true },
+      ]
+      const sortingOrderOptions = [
+        { text: 'asc', value: 'asc' },
+        { text: 'desc', value: 'desc' },
+        { text: 'no sorting', value: null },
+      ]
+      return {
+        items,
+        columns,
+        input,
+        filter: input,
+        sortBy: 'isFavorite',
+        total_all_product_count: { type: Number },
+        all_active_product_count: { type: Number },
+        all_favorite_product_count: { type: Number },
+        count_all_research_product: { type: Number },
+        all_category_stat,
+        isCustomFilteringFn: false,
+        sortingOrder: 'desc',
       }
-      console.log(this.filter);
-      return source?.toString?.() === this.filter
     },
-    fetchData() {
-      let self = this;
-      axios
-        .get("/api/dashboard/index")
-        .then(function (response) {
-          self.items = response.data.statistics;
-          self.total_all_product_count = response.data.total_all_product_count;
-          self.all_active_product_count = response.data.all_active_product_count;
-          self.all_favorite_product_count = response.data.all_favorite_product_count;
-          self.count_all_research_product = response.data.count_all_research_product;
-
-          console.log(response.data.all_active_product_count);
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
+    methods: {
+      filterExact(source) {
+        if (this.filter === '') {
+          return true
+        }
+        console.log(this.filter)
+        return source?.toString?.() === this.filter
+      },
+      fetchData() {
+        let self = this
+        axios
+          .get('/api/dashboard/index')
+          .then(function (response) {
+            self.items = response.data.statistics
+            self.total_all_product_count = response.data.total_all_product_count
+            self.all_active_product_count = response.data.all_active_product_count
+            self.all_favorite_product_count = response.data.all_favorite_product_count
+            self.count_all_research_product = response.data.count_all_research_product
+            self.all_category_stat = response.data.all_category_stat
+            console.log(response.data.all_category_stat)
+          })
+          .catch(function (error) {
+            console.error(error)
+          })
+      },
     },
-  },
-  created() {
-    this.fetchData();
-  },
-  computed: {
-    customFilteringFn() {
-      return this.isCustomFilteringFn ? this.filterExact : undefined
+    created() {
+      this.fetchData()
     },
-  },
-})
-
-  
+    computed: {
+      customFilteringFn() {
+        return this.isCustomFilteringFn ? this.filterExact : undefined
+      },
+    },
+  })
 </script>
 
 <style lang="scss" scoped>
