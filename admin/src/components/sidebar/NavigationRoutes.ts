@@ -39,6 +39,10 @@ export default {
           displayName: 'menu.tv32',
         },
         {
+          name: 'tv40',
+          displayName: 'menu.tv40',
+        },
+        {
           name: 'tv50',
           displayName: 'menu.tv50',
         },

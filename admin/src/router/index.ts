@@ -50,6 +50,11 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('../pages/admin/products/Tv32.vue'),
           },
           {
+            name: 'tv40',
+            path: 'tv40',
+            component: () => import('../pages/admin/products/Tv40.vue'),
+          },
+          {
             name: 'tv50',
             path: 'tv50',
             component: () => import('../pages/admin/products/Tv50.vue'),
