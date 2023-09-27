@@ -24,7 +24,8 @@ const middlewareCSFR = async (axiosconfig) => {
     // then first get the CSRF Token
     let pathCSFR = '/sanctum/csrf-cookie'
 
-    let urlToCall = `${import.meta.env.API_HOST || 'http://localhost/technique/public'}${pathCSFR}`
+    let urlToCall = `${'http://techniqueb1.simpleitrunner.ru/' || 'http://localhost/trade-tools/public'}${pathCSFR}`
+    //let urlToCall = `${import.meta.env.API_HOST || 'http://localhost/technique/public'}${pathCSFR}`
     await axios.get(urlToCall, { withCredentials: true })
     // then continue with the request
     return axiosconfig

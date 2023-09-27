@@ -14,7 +14,7 @@ export const useApi = (endpoint = 'api') => {
 
   if (endpoint === 'api') {
     //baseURL = API_HOST + API_PATH || 'http://localhost/technique/public/api'
-    baseURL = API_HOST + API_PATH || 'http://techniqueb1.simpleitrunner.ru/'
+    baseURL = API_HOST + API_PATH || 'http://techniqueb1.simpleitrunner.ru/api'
   } else if (endpoint === 'web') {
     baseURL = API_HOST || 'http://localhost'
   }
