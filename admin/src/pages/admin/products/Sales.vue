@@ -53,7 +53,7 @@
           { key: 'name', sortable: true },
           { key: 'count_learn', sortable: true, width: 20 },
           { key: 'actions', width: 80 },
-          { key: 'favorite', width: 50 },
+          { key: 'updated_at', width: 50 },
         ]
         return {
           items,
