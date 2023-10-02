@@ -75,6 +75,11 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('../pages/admin/products/Favorite.vue'),
           },
           {
+            name: 'sales',
+            path: 'sales',
+            component: () => import('../pages/admin/products/Sales.vue'),
+          },
+          {
             name: 'product-edit',
             path: 'edit/:id',
             component: () => import('../pages/admin/products/Edit.vue'),

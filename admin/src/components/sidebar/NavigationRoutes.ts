@@ -58,6 +58,10 @@ export default {
           name: 'favorite',
           displayName: 'menu.favorite',
         },
+        {
+          name: 'sales',
+          displayName: 'menu.sales',
+        },
       ],
     },
   ] as INavigationRoute[],

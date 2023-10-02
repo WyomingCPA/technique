@@ -346,7 +346,8 @@
     "tv50": "Tv50",
     "smart": "Смартфоны",
     "laptop": "Ноутбуки",
-    "favorite": "Избранные"
+    "favorite": "Избранные",
+    "sales": "Проданные за последние 7 дней"
   },
   "messages": {
     "all": "See all messages",
