@@ -24,15 +24,14 @@ class ProductController extends Controller
             'products' => Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kot')->get(),
         ], 200);
     }
-    
+
     public function index(Request $request)
     {
         $products = Product::where('status', true)->where('category_id', '=', 1)->where('city', 'kor')->get();
         $list_price = $products->pluck('price');
         $price = [];
-        foreach ($list_price as $item)
-        {
-            $price[] = (int)$item;
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
         }
         $result_price = array_count_values($price);
         return response([
@@ -40,15 +39,14 @@ class ProductController extends Controller
             'price' => $result_price,
         ], 200);
     }
-    
+
     public function washmashine(Request $request)
     {
         $products = Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kor')->orderBy('price', 'desc')->get();
         $list_price = $products->pluck('price');
         $price = [];
-        foreach ($list_price as $item)
-        {
-            $price[] = (int)$item;
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
         }
 
         $result_price = array_count_values($price);
@@ -64,9 +62,8 @@ class ProductController extends Controller
         $products = Product::where('status', true)->where('category_id', '=', 6)->where('city', 'kor')->get();
         $list_price = $products->pluck('price');
         $price = [];
-        foreach ($list_price as $item)
-        {
-            $price[] = (int)$item;
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
         }
 
         $result_price = array_count_values($price);
@@ -81,9 +78,8 @@ class ProductController extends Controller
         $products = Product::where('status', true)->where('category_id', '=', 4)->where('city', 'kor')->get();
         $list_price = $products->pluck('price');
         $price = [];
-        foreach ($list_price as $item)
-        {
-            $price[] = (int)$item;
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
         }
 
         $result_price = array_count_values($price);
@@ -98,9 +94,8 @@ class ProductController extends Controller
         $products = Product::where('status', true)->where('category_id', '=', 5)->where('city', 'kor')->get();
         $list_price = $products->pluck('price');
         $price = [];
-        foreach ($list_price as $item)
-        {
-            $price[] = (int)$item;
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
         }
         $result_price = array_count_values($price);
         return response([
@@ -114,9 +109,8 @@ class ProductController extends Controller
         $products = Product::where('status', true)->where('category_id', '=', 7)->where('city', 'kor')->get();
         $list_price = $products->pluck('price');
         $price = [];
-        foreach ($list_price as $item)
-        {
-            $price[] = (int)$item;
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
         }
 
         $result_price = array_count_values($price);
@@ -134,19 +128,16 @@ class ProductController extends Controller
         $list_name = $products->pluck('name');
         $price = [];
         $params = [];
-        foreach ($list_price as $item)
-        {
-            $price[] = (int)$item;
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
         }
         $re = "~[\<](.*)[\>]~";
         $params_raw = [];
-        foreach ($list_name as $item)
-        {
+        foreach ($list_name as $item) {
             preg_match_all($re, $item, $matches);
             $raw_string = $matches[1][0] ?? 0;
             $params_raw = explode("/", $raw_string);
-            foreach ($params_raw as $value)
-            {
+            foreach ($params_raw as $value) {
                 $params[] = $value;
             }
         }
@@ -162,12 +153,33 @@ class ProductController extends Controller
     }
     public function sales(Request $request)
     {
-        $products = Product::where('status', false)->where('updated_at', '>=', Carbon::now()->subDays(7)->startOfDay())->where('city', 'kor')->get();
+        $products = Product::where('status', false)->where('updated_at', '>=', Carbon::now()->subDays(7)->startOfDay())
+            ->where('city', 'kor')
+            ->orderBy('updated_at', 'desc')->get();
+
         $list_price = $products->pluck('price');
         $price = [];
-        foreach ($list_price as $item)
-        {
-            $price[] = (int)$item;
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
+        }
+
+        $result_price = array_count_values($price);
+        return response([
+            'products' => $products,
+            'price' => $result_price,
+        ], 200);
+    }
+
+    public function changes(Request $request)
+    {
+        $products = Product::where('status', true)->where('updated_at', '>=', Carbon::now()->subDays(7)->startOfDay())
+            ->where('city', 'kor')
+            ->orderBy('updated_at', 'desc')->get();
+
+        $list_price = $products->pluck('price');
+        $price = [];
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
         }
 
         $result_price = array_count_values($price);
@@ -198,14 +210,12 @@ class ProductController extends Controller
     public function setFavorite(Request $request)
     {
         $isFavorite = $request->is_favorite;
-        if ($isFavorite)
-        {
+        if ($isFavorite) {
             Auth::user()->favoritesProduct()->attach($request->id_product);
-        }
-        else {
+        } else {
             Auth::user()->favoritesProduct()->detach($request->id_product);
         }
-        
+
         return response([
             'status' => true,
         ], 200);
@@ -220,10 +230,10 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($request->id);
         $product->update([
-         
+
             'description' => $request->description,
         ]);
-        
+
         return response([
             'status' => true,
         ], 200);
