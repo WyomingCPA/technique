@@ -50,7 +50,7 @@ class GetDataWashMasine extends Command
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'
             ],
             'curl' => [CURLOPT_SSL_VERIFYPEER => false],
-            'proxy' => 'root:6zd4{k879B8$@195.161.41.150:3128',
+            'proxy' => 'https://root:6zd4{k879B8$@195.161.41.150:3128',
         ];
 
         $page = 5;
