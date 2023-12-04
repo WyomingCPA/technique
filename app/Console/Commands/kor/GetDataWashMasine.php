@@ -51,6 +51,7 @@ class GetDataWashMasine extends Command
             ],
             'curl' => [CURLOPT_SSL_VERIFYPEER => false],
             'proxy' => 'socks5://127.0.0.1:9050',
+            'timeout' => 60,
         ];
 
         $page = 5;
