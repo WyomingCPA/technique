@@ -119,7 +119,7 @@
         getWashProduct() {
           let self = this
           axios
-            .get('/api/product/sales')
+            .get('/api/product/changes')
             .then(function (response) {
               self.items = response.data.products
               self.listPrice = response.data.price
@@ -207,4 +207,3 @@
     }
   </script>
   <style lang="scss" scoped></style>
-  

@@ -62,6 +62,10 @@ export default {
           name: 'sales',
           displayName: 'menu.sales',
         },
+        {
+          name: 'changes',
+          displayName: 'menu.changes',
+        },
       ],
     },
   ] as INavigationRoute[],
