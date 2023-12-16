@@ -50,7 +50,7 @@ class GetDataWashMasine extends Command
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'
             ],
             'curl' => [CURLOPT_SSL_VERIFYPEER => false],
-            'proxy' => 'socks5://127.0.0.1:9050',
+            //'proxy' => 'socks5://127.0.0.1:9050',
             'timeout' => 60,
         ];
 

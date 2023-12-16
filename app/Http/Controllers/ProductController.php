@@ -238,4 +238,45 @@ class ProductController extends Controller
             'status' => true,
         ], 200);
     }
+
+    public function saveParceProduct(Request $request)
+    {
+        $data = json_decode($request->post()[0], true);
+        $category_id = 0;
+        foreach ($data as $item) {
+            //$test = $item["figi"];
+            $model = Product::firstOrCreate(
+                ['link' => $item["link"],],
+                [
+                    'category_id' => $item["category_id"],
+                    'name' => $item["name"],
+                    'link' => $item["link"],
+                    'city' => $item["city"],
+                    'slug' => '-',
+                    'price' => (int)filter_var($item["price"], FILTER_SANITIZE_NUMBER_INT),
+                    'count_learn' => 0,
+                ]
+            );
+            $model->price = (int)filter_var($item["price"], FILTER_SANITIZE_NUMBER_INT);
+            $model->save();
+            $list_link[] = $item["link"];
+            $category_id = $item["category_id"];
+        }
+        //Исключить товары которых не оказалось при парсинге 
+        $products = Product::where('category_id', $category_id)->where('city', 'kor')->get();
+        foreach ($products as $item) {
+            if (in_array($item->link, $list_link)) {
+                $item->status = true;
+                $item->save();
+                echo "true\n";
+            } else {
+                $item->status = false;
+                $item->save();
+                echo "false\n";
+            }
+        }
+        return response([
+            'status' => true,
+        ], 200);
+    }
 }

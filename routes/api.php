@@ -38,10 +38,12 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::get('changes', 'ProductController@changes');
     Route::post('set-learn', 'ProductController@learn');
     Route::post('set-favorite', 'ProductController@setFavorite');
-
     Route::get('/edit/{id}', 'ProductController@edit');
 	Route::post('/update', 'ProductController@update');
-    
+});
+
+Route::group(['prefix' => 'data',], function () {
+	Route::post('/parce-product', 'ProductController@saveParceProduct');
 });
 
 Route::group(['prefix' => 'category', 'middleware' => 'auth:sanctum'], function () {
