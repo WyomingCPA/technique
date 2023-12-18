@@ -70,6 +70,11 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('../pages/admin/products/Laptop.vue'),
           },
           {
+            name: 'vacuum',
+            path: 'vacuum',
+            component: () => import('../pages/admin/products/Vacuum.vue'),
+          },
+          {
             name: 'favorite',
             path: 'favorite',
             component: () => import('../pages/admin/products/Favorite.vue'),

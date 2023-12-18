@@ -55,6 +55,10 @@ export default {
           displayName: 'menu.laptop',
         },
         {
+          name: 'vacuum',
+          displayName: 'menu.vacuum',
+        },
+        {
           name: 'favorite',
           displayName: 'menu.favorite',
         },

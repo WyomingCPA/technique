@@ -33,6 +33,7 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::get('tv50', 'ProductController@tv50');
     Route::get('smart', 'ProductController@smart');
     Route::get('laptop', 'ProductController@laptop');
+    Route::get('vacuum', 'ProductController@vacuum');
     Route::get('favorite', 'ProductController@favorite');
     Route::get('sales', 'ProductController@sales');
     Route::get('changes', 'ProductController@changes');
