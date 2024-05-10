@@ -30,6 +30,23 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/admin/dashboard/Dashboard.vue'),
       },
       {
+        name: 'category',
+        path: 'category',
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'category-index',
+            path: 'index',
+            component: () => import('../pages/admin/category/Index.vue'),
+          },
+          {
+            name: 'category-create',
+            path: 'create',
+            component: () => import('../pages/admin/category/Create.vue'),
+          },
+        ],
+      },
+      {
         name: 'products',
         path: 'products',
         component: RouteViewComponent,

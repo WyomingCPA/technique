@@ -32,7 +32,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $model = Category::create([
-            'name' => $request->name_category,
+            'id' => (int)$request->idCategory,
+            'name' => $request->nameCategory,
         ]);
         return response([
             'status' => true,

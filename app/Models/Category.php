@@ -11,7 +11,9 @@ class Category extends Model
 {
     use HasFactory;
     protected $table = 'category';
+    
     protected $fillable = [
+        'id',
         'name',
     ];
     protected $appends = ['count_access_product',];

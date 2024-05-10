@@ -19,6 +19,24 @@ export default {
       },
     },
     {
+      name: 'category',
+      displayName: 'menu.category',
+      meta: {
+        icon: 'vuestic-iconset-components',
+      },
+      disabled: true,
+      children: [
+        {
+          name: 'category-index',
+          displayName: 'menu.category-index',
+        },
+        {
+          name: 'category-create',
+          displayName: 'menu.category-create',
+        },
+      ],
+    },
+    {
       name: 'products',
       displayName: 'menu.products',
       meta: {

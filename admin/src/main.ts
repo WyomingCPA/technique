@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import i18n from './i18n'
 import { createVuestic } from 'vuestic-ui'
 import { createGtm } from '@gtm-support/vue-gtm'
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 import stores from './stores'
 import router from './router'
@@ -33,8 +34,10 @@ axios.interceptors.response.use((resp) => resp, middleware401)
 app.use(stores)
 app.use(router)
 app.use(i18n)
-app.use(createVuestic({ config: vuesticGlobalConfig }))
 
+
+app.use(createVuestic({ config: vuesticGlobalConfig }))
+app.use(CKEditor)
 if (import.meta.env.VITE_APP_GTM_ENABLED) {
   app.use(
     createGtm({
