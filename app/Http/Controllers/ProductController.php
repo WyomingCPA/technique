@@ -123,9 +123,19 @@ class ProductController extends Controller
 
     public function laptop(Request $request)
     {
-        $products = Product::where('status', true)->where('category_id', '=', 8)->where('city', 'kor')->get();
-        $list_price = $products->pluck('price');
-        $list_name = $products->pluck('name');
+        $priceMin = (int)$request->get('priceMin');
+        $priceMax = (int)$request->get('priceMax');
+
+        $object = Product::where('status', true)->where('category_id', '=', 8)->where('city', 'kor');
+        if ($priceMin !== null || $priceMax !== null) {
+            
+            $object = $object->where('price','>=', $priceMin);
+            $object = $object->where('price','<=', $priceMax);
+        }
+        $products_filter = $object->get();
+        $product = Product::where('status', true)->where('category_id', '=', 8)->where('city', 'kor')->get();
+        $list_price = $product->pluck('price');
+        $list_name = $products_filter->pluck('name');
         $price = [];
         $params = [];
         foreach ($list_price as $item) {
@@ -146,9 +156,11 @@ class ProductController extends Controller
         $result_params = array_count_values($params);
 
         return response([
-            'products' => $products,
+            'products' => $products_filter, 
             'price' => $result_price,
             'params' => $result_params,
+            'priceMin' => $priceMin,
+            'priceMax' => $priceMax,
         ], 200);
     }
 
