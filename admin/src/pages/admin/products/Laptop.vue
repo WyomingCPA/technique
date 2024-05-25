@@ -54,6 +54,8 @@ export default {
     ]
     return {
       value: [20000, 80000],
+      min: 20000,
+      max: 100000,
       items,
       columns,
       input,
@@ -119,7 +121,7 @@ export default {
           .then((response) => {
             if (response.status) {
               console.log('Вызвали алерт')
-              this.getProduct()
+              this.getProduct();
               this.loading = false
             } else {
               console.log('Не работает')
@@ -156,7 +158,10 @@ export default {
             console.log(item);
             price.push(parseInt(item))
           });
-          self.value = [Math.min(...price), Math.max(...price)]
+          //self.value = [Math.min(...price), Math.max(...price)]
+          self.min = Math.min(...price);
+          self.max = Math.max(...price);
+
           console.log(self.value);
         })
         .catch((error) => {

@@ -27,11 +27,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:sanctum'], function
 
 Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function () {
     Route::get('refrigerator', 'ProductController@index');
-    Route::get('washmashine', 'ProductController@washmashine');
+    Route::post('washmashine', 'ProductController@washmashine');
     Route::get('tv32', 'ProductController@tv32');
     Route::get('tv40', 'ProductController@tv40');
     Route::get('tv50', 'ProductController@tv50');
-    Route::get('smart', 'ProductController@smart');
+    Route::post('smart', 'ProductController@smart');
     Route::post('laptop', 'ProductController@laptop');
     Route::get('vacuum', 'ProductController@vacuum');
     Route::get('favorite', 'ProductController@favorite');

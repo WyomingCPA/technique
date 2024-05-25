@@ -35,7 +35,6 @@ app.use(stores)
 app.use(router)
 app.use(i18n)
 
-
 app.use(createVuestic({ config: vuesticGlobalConfig }))
 app.use(CKEditor)
 if (import.meta.env.VITE_APP_GTM_ENABLED) {

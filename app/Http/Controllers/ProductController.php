@@ -40,23 +40,6 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function washmashine(Request $request)
-    {
-        $products = Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kor')->orderBy('price', 'desc')->get();
-        $list_price = $products->pluck('price');
-        $price = [];
-        foreach ($list_price as $item) {
-            $price[] = (int) $item;
-        }
-
-        $result_price = array_count_values($price);
-
-        return response([
-            'products' => $products,
-            'price' => $result_price,
-        ], 200);
-    }
-
     public function tv32(Request $request)
     {
         $products = Product::where('status', true)->where('category_id', '=', 6)->where('city', 'kor')->get();
@@ -104,20 +87,97 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function smart(Request $request)
+    public function washmashine(Request $request)
     {
-        $products = Product::where('status', true)->where('category_id', '=', 7)->where('city', 'kor')->get();
-        $list_price = $products->pluck('price');
+        $priceMin = (int)$request->get('priceMin');
+        $priceMax = (int)$request->get('priceMax');
+
+        $object = Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kor');
+
+        if ($priceMin !== null || $priceMax !== null) {
+
+            $object = $object->where('price', '>=', $priceMin);
+            $object = $object->where('price', '<=', $priceMax);
+        }
+
+        $products_filter = $object->get();
+
+        $product = Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kor')->get();
+        $list_price = $product->pluck('price');
+        $list_name = $products_filter->pluck('name');
+
         $price = [];
+        $params = [];
         foreach ($list_price as $item) {
             $price[] = (int) $item;
         }
 
+        $re = "~[\<](.*)[\>]~";
+        $params_raw = [];
+        foreach ($list_name as $item) {
+            preg_match_all($re, $item, $matches);
+            $raw_string = $matches[1][0] ?? 0;
+            $params_raw = explode("/", $raw_string);
+            foreach ($params_raw as $value) {
+                $params[] = $value;
+            }
+        }
+
         $result_price = array_count_values($price);
+        $result_params = array_count_values($params);
 
         return response([
-            'products' => $products,
+            'products' => $products_filter,
             'price' => $result_price,
+            'params' => $result_params,
+            'priceMin' => $priceMin,
+            'priceMax' => $priceMax,
+        ], 200);
+    }
+
+    public function smart(Request $request)
+    {
+        $priceMin = (int)$request->get('priceMin');
+        $priceMax = (int)$request->get('priceMax');
+        $object = Product::where('status', true)->where('category_id', '=', 7)->where('city', 'kor');
+
+        if ($priceMin !== null || $priceMax !== null) {
+
+            $object = $object->where('price', '>=', $priceMin);
+            $object = $object->where('price', '<=', $priceMax);
+        }
+
+        $products_filter = $object->get();
+
+        $product = Product::where('status', true)->where('category_id', '=', 7)->where('city', 'kor')->get();
+        $list_price = $product->pluck('price');
+        $list_name = $products_filter->pluck('name');
+        $price = [];
+        $params = [];
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
+        }
+
+        $re = "~[\<](.*)[\>]~";
+        $params_raw = [];
+        foreach ($list_name as $item) {
+            preg_match_all($re, $item, $matches);
+            $raw_string = $matches[1][0] ?? 0;
+            $params_raw = explode("/", $raw_string);
+            foreach ($params_raw as $value) {
+                $params[] = $value;
+            }
+        }
+
+        $result_price = array_count_values($price);
+        $result_params = array_count_values($params);
+
+        return response([
+            'products' => $products_filter,
+            'price' => $result_price,
+            'params' => $result_params,
+            'priceMin' => $priceMin,
+            'priceMax' => $priceMax,
         ], 200);
     }
 
@@ -128,10 +188,11 @@ class ProductController extends Controller
 
         $object = Product::where('status', true)->where('category_id', '=', 8)->where('city', 'kor');
         if ($priceMin !== null || $priceMax !== null) {
-            
-            $object = $object->where('price','>=', $priceMin);
-            $object = $object->where('price','<=', $priceMax);
+
+            $object = $object->where('price', '>=', $priceMin);
+            $object = $object->where('price', '<=', $priceMax);
         }
+
         $products_filter = $object->get();
         $product = Product::where('status', true)->where('category_id', '=', 8)->where('city', 'kor')->get();
         $list_price = $product->pluck('price');
@@ -156,7 +217,7 @@ class ProductController extends Controller
         $result_params = array_count_values($params);
 
         return response([
-            'products' => $products_filter, 
+            'products' => $products_filter,
             'price' => $result_price,
             'params' => $result_params,
             'priceMin' => $priceMin,
