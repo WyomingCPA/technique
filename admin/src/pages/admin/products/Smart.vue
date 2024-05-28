@@ -1,27 +1,31 @@
 <template>
   <va-card>
     <va-card-content>
-      <div class="grid md:grid-cols-2 gap-6 mb-6">
-        <va-input v-model="input" placeholder="Filter..." class="w-full" />
+      <div class="row">
+          <va-input v-model="input" placeholder="Filter..." class="w-full" />
       </div>
-      <div class="flex flex-wrap gap-6 mb-6">
-        <span v-for="(thing, index) in listPrice" :key="index"><a href="#" @click="filterPrice(index)"> {{ index }}({{
-          thing }}) </a></span>
+      <div class="row">
+        <div class="flex flex-wrap gap-6 mb-6 pt-6">
+          <span v-for="(thing, index) in listPrice" :key="index"><a href="#" @click="filterPrice(index)"> {{ index }}({{
+            thing }}) </a></span>
+        </div>
       </div>
-      <div class="flex flex-wrap gap-6 mb-6">
-        <VaSlider @change="sliderChange()" v-model="value" :step="1000" :min="5000" :max="100000" class="mb-6" range
-          track-label-visible :track-label="processTrackLabel" />
-      </div>
-      <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
-        v-model:sort-by="sortBy" v-model:sorting-order="sortingOrder" @filtered="filteredCount = $event.items.length">
-        <template #cell(actions)="{ rowData }">
-          <va-button @click="setLearn(rowData.id)">Повторил</va-button>
-        </template>
-        <template #cell(isFavorite)="{ rowData }">
-          <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)" />
-        </template>
-      </va-data-table>
 
+      <div class="flex flex-wrap gap-6 mb-6">
+        <VaSlider label="Price Range" @change="sliderChange()" v-model="value" :step="1000" :min="5000" :max="100000"
+          class="mb-6" range track-label-visible :track-label="processTrackLabel" />
+      </div>
+      <div class="row">
+        <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
+          v-model:sort-by="sortBy" v-model:sorting-order="sortingOrder" @filtered="filteredCount = $event.items.length">
+          <template #cell(actions)="{ rowData }">
+            <va-button @click="setLearn(rowData.id)">Повторил</va-button>
+          </template>
+          <template #cell(isFavorite)="{ rowData }">
+            <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)" />
+          </template>
+        </va-data-table>
+      </div>
       <va-alert class="!mt-6" color="info" outline>
         Number of filtered items:
         <va-chip>{{ filteredCount }}</va-chip>
@@ -155,24 +159,24 @@ export default {
               return qs.stringify(params);
             },
           })
-        .then((response) => {
-          self.items = response.data.products;
-          self.listPrice = response.data.price;
+          .then((response) => {
+            self.items = response.data.products;
+            self.listPrice = response.data.price;
 
-          let price = [];
-          Object.keys(self.listPrice).forEach(function (item, i, arr) {
-            console.log(item);
-            price.push(parseInt(item))
+            let price = [];
+            Object.keys(self.listPrice).forEach(function (item, i, arr) {
+              console.log(item);
+              price.push(parseInt(item))
+            });
+            //self.value = [Math.min(...price), Math.max(...price)]
+            self.min = Math.min(...price);
+            self.max = Math.max(...price);
+
+            console.log(self.value);
+          })
+          .catch((error) => {
+            console.error(error)
           });
-          //self.value = [Math.min(...price), Math.max(...price)]
-          self.min = Math.min(...price);
-          self.max = Math.max(...price);
-
-          console.log(self.value);
-        })
-        .catch((error) => {
-          console.error(error)
-        });
       });
     },
 

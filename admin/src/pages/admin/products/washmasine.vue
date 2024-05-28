@@ -1,17 +1,20 @@
 <template>
   <va-card>
     <va-card-content>
-      <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <div class="row">
         <va-input v-model="input" placeholder="Filter..." class="w-full" />
       </div>
+      <div class="row">
       <div class="flex flex-wrap gap-6 mb-6">
         <span v-for="(thing, index) in listPrice" :key="index"><a href="#" @click="filterPrice(index)"> {{ index }}({{
           thing }}) </a></span>
       </div>
+    </div>
       <div class="flex flex-wrap gap-6 mb-6">
-        <VaSlider @change="sliderChange()" v-model="valueRange" :step="1000" :min="5000" :max="100000" class="mb-6" range
+        <VaSlider label="Price Range" @change="sliderChange()" v-model="valueRange" :step="1000" :min="5000" :max="100000" class="mb-6" range
           track-label-visible :track-label="processTrackLabel" />
       </div>
+      <div class="row">
       <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
         v-model:sort-by="sortBy" v-model:sorting-order="sortingOrder" @filtered="filteredCount = $event.items.length">
         <template #cell(actions)="{ rowData }">
@@ -21,7 +24,7 @@
           <va-switch v-model="rowData.isFavorite" @click="setFavorite(rowData.id, rowData.isFavorite)" />
         </template>
       </va-data-table>
-
+    </div>
       <va-alert class="!mt-6" color="info" outline>
         Number of filtered items:
         <va-chip>{{ filteredCount }}</va-chip>
