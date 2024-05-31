@@ -11,8 +11,15 @@
       </div>
     </div>
       <div class="flex flex-wrap gap-6 mb-6">
-        <VaSlider label="Price Range" @change="sliderChange()" v-model="valueRange" :step="1000" :min="5000" :max="100000" class="mb-6" range
-          track-label-visible :track-label="processTrackLabel" />
+        <VaSlider @change="sliderChange()" v-model="value" :step="1000" :min="5000" :max="100000"
+          class="mb-6" range track-label-visible :track-label="processTrackLabel">
+          <template #prepend>
+            <VaCounter manual-input @change="sliderChange()" :step="1000" v-model="value[0]" :min="5000" :max="100000"/>
+          </template>
+          <template #append>
+            <VaCounter manual-input @change="sliderChange()" :step="1000" v-model="value[1]" :min="5000" :max="100000"/>
+          </template>
+        </VaSlider>
       </div>
       <div class="row">
       <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
@@ -57,10 +64,9 @@ export default {
       { text: 'no sorting', value: null },
     ]
     return {
-      valueRange: [5000, 80000],
+      value: [5000, 80000],
       min: 5000,
       max: 100000,
-      value: true,
       items,
       columns,
       input,
@@ -83,8 +89,8 @@ export default {
       this.serverParams = Object.assign({}, this.serverParams, newProps);
     },
     sliderChange() {
-      console.log(this.valueRange);
-      this.updateParams({ priceMin: this.valueRange[0], priceMax: this.valueRange[1] });
+      console.log(this.value);
+      this.updateParams({ priceMin: this.value[0], priceMax: this.value[1] });
       this.getProduct();
     },
     processTrackLabel(value, order) {
@@ -251,7 +257,7 @@ export default {
     },
   },
   mounted: function () {
-    this.updateParams({ priceMin: this.valueRange[0], priceMax: this.valueRange[1] });
+    this.updateParams({ priceMin: this.value[0], priceMax: this.value[1] });
     this.getProduct();
   },
 }

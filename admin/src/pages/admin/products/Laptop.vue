@@ -9,8 +9,15 @@
           thing }}) </a></span>
       </div>
       <div class="flex flex-wrap gap-6 mb-6">
-        <VaSlider @change="sliderChange()" v-model="value" :step="1000" :min="20000" :max="100000" class="mb-6" range
-          track-label-visible :track-label="processTrackLabel" />
+        <VaSlider @change="sliderChange()" v-model="value" :step="1000" :min="5000" :max="100000"
+          class="mb-6" range track-label-visible :track-label="processTrackLabel">
+          <template #prepend>
+            <VaCounter manual-input @change="sliderChange()" :step="1000" v-model="value[0]" :min="5000" :max="100000"/>
+          </template>
+          <template #append>
+            <VaCounter manual-input @change="sliderChange()" :step="1000" v-model="value[1]" :min="5000" :max="100000"/>
+          </template>
+        </VaSlider>
       </div>
       <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
         v-model:sort-by="sortBy" v-model:sorting-order="sortingOrder" @filtered="filteredCount = $event.items.length">

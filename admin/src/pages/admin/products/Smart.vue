@@ -2,18 +2,25 @@
   <va-card>
     <va-card-content>
       <div class="row">
-          <va-input v-model="input" placeholder="Filter..." class="w-full" />
+        <va-input v-model="input" placeholder="Filter..." class="w-full" />
       </div>
       <div class="row">
         <div class="flex flex-wrap gap-6 mb-6 pt-6">
           <span v-for="(thing, index) in listPrice" :key="index"><a href="#" @click="filterPrice(index)"> {{ index }}({{
-            thing }}) </a></span>
+          thing }}) </a></span>
         </div>
       </div>
 
       <div class="flex flex-wrap gap-6 mb-6">
-        <VaSlider label="Price Range" @change="sliderChange()" v-model="value" :step="1000" :min="5000" :max="100000"
-          class="mb-6" range track-label-visible :track-label="processTrackLabel" />
+        <VaSlider @change="sliderChange()" v-model="value" :step="1000" :min="5000" :max="100000"
+          class="mb-6" range track-label-visible :track-label="processTrackLabel">
+          <template #prepend>
+            <VaCounter manual-input @change="sliderChange()" :step="1000" v-model="value[0]" :min="5000" :max="100000"/>
+          </template>
+          <template #append>
+            <VaCounter manual-input @change="sliderChange()" :step="1000" v-model="value[1]" :min="5000" :max="100000"/>
+          </template>
+        </VaSlider>
       </div>
       <div class="row">
         <va-data-table :items="items" :columns="columns" :filter="filter" :filter-method="customFilteringFn"
