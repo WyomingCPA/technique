@@ -255,6 +255,37 @@ class ProductController extends Controller
             'params' => $result_params,
         ], 200);
     }
+
+    public function robotVacum(Request $request)
+    {
+        $products = Product::where('status', true)->where('category_id', '=', 10)->where('city', 'kor')->get();
+        $list_price = $products->pluck('price');
+        $list_name = $products->pluck('name');
+        $price = [];
+        $params = [];
+        foreach ($list_price as $item) {
+            $price[] = (int) $item;
+        }
+        $re = "~[\<](.*)[\>]~";
+        $params_raw = [];
+        foreach ($list_name as $item) {
+            preg_match_all($re, $item, $matches);
+            $raw_string = $matches[1][0] ?? 0;
+            $params_raw = explode("/", $raw_string);
+            foreach ($params_raw as $value) {
+                $params[] = $value;
+            }
+        }
+
+        $result_price = array_count_values($price);
+        $result_params = array_count_values($params);
+
+        return response([
+            'products' => $products,
+            'price' => $result_price,
+            'params' => $result_params,
+        ], 200);
+    }
     public function sales(Request $request)
     {
         $products = Product::where('status', false)->where('updated_at', '>=', Carbon::now()->subDays(7)->startOfDay())

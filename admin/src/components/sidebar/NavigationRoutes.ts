@@ -77,6 +77,10 @@ export default {
           displayName: 'menu.vacuum',
         },
         {
+          name: 'robot-vacuum',
+          displayName: 'menu.robot-vacuum',
+        },
+        {
           name: 'favorite',
           displayName: 'menu.favorite',
         },
