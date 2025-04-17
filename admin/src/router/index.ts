@@ -97,6 +97,11 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('../pages/admin/products/RobotVacuum.vue'),
           },
           {
+            name: 'vertical-vacuum',
+            path: 'vertical-vacuum',
+            component: () => import('../pages/admin/products/VerticalVacuum.vue'),
+          },
+          {
             name: 'favorite',
             path: 'favorite',
             component: () => import('../pages/admin/products/Favorite.vue'),

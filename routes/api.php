@@ -35,6 +35,7 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::post('laptop', 'ProductController@laptop');
     Route::get('vacuum', 'ProductController@vacuum');
     Route::get('robot', 'ProductController@robotVacum');
+    Route::get('vertical-vacum', 'ProductController@verticalVacuum');
     Route::get('favorite', 'ProductController@favorite');
     Route::get('sales', 'ProductController@sales');
     Route::get('changes', 'ProductController@changes');

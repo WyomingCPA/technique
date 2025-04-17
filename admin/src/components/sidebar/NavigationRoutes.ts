@@ -81,6 +81,10 @@ export default {
           displayName: 'menu.robot-vacuum',
         },
         {
+          name: 'vertical-vacuum',
+          displayName: 'menu.vertical-vacuum',
+        },
+        {
           name: 'favorite',
           displayName: 'menu.favorite',
         },
